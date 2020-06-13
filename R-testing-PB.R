@@ -41,3 +41,5 @@ library("tidyr")
 library("lmtest")
 library("popbio")
 
+# We remove columns to keep the ones that we will use as IV
+
