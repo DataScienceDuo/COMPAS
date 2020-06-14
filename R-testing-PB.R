@@ -42,4 +42,5 @@ library("lmtest")
 library("popbio")
 
 # We remove columns to keep the ones that we will use as IV
+# We need to make a decision on what columns we will keep & if (and how) we will link this data with rows on other files
 
