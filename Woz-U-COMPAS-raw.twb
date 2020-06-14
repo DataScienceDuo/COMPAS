@@ -516,8 +516,8 @@
         <devicelayout auto-generated='true' name='Phone'>
           <size maxheight='700' minheight='700' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='3' type='layout-basic' w='100000' x='0' y='0'>
-              <zone h='98000' id='4' param='vert' type='layout-flow' w='98400' x='800' y='1000' />
+            <zone h='100000' id='5' type='layout-basic' w='100000' x='0' y='0'>
+              <zone h='98000' id='6' param='vert' type='layout-flow' w='98400' x='800' y='1000' />
               <zone-style>
                 <format attr='border-color' value='#000000' />
                 <format attr='border-style' value='none' />
@@ -532,7 +532,7 @@
     </dashboard>
   </dashboards>
   <windows source-height='30'>
-    <window class='worksheet' name='COMPAS'>
+    <window class='worksheet' maximized='true' name='COMPAS'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -562,7 +562,7 @@
       </viewpoint>
       <simple-id uuid='{4642B516-3D3D-4A71-A876-40302B34494D}' />
     </window>
-    <window class='dashboard' maximized='true' name='Dashboard 1'>
+    <window class='dashboard' name='Dashboard 1'>
       <viewpoints />
       <active id='-1' />
       <simple-id uuid='{50579ABE-5D05-4DDB-9B06-CF720E7B473C}' />
