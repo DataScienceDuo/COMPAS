@@ -1,38 +1,19 @@
-# REV 16JUN20
+# REV 17JUN20
 # PRELIMINARY WRANLING DONE AT THE BEGINNING
-
-library(readr)
-library(IDPmisc)
-
-
-compas_scores_raw <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/compas-scores-raw.csv")
-View(compas_scores_raw)
-
-
-compas_scores2 <- na.omit(compas_scores_raw)
-
-# To remove NA´s fields
-compas_scores3 <- NaRV.omit(compas_scores_raw)
-# No change.
-
-# We remove rows for Persons with "weird" birthdates 
-compas_scores4 <-compas_scores3[!(compas_scores3$Person_ID=="51157" | compas_scores3$Person_ID=="57823"),]
-compas_scores5 <-compas_scores4[!(compas_scores4$Person_ID=="62384" | compas_scores4$Person_ID=="54272"),]
-
-# examples of removing rows using a list/vector
-# install.packages("Hmisc")
-# library("Hmisc")
-# datawithoutVF = data[which(rownames(data) %nin% remove), ]
-# datawithoutVF = data[!row.names(data)%in%remove,]
-# datawithoutVF = data[ !(row.names(data) %in% remove), ]
-
-# Libraries needed for regression. (not in use YET, for next steps use)
 install.packages("caret")
 install.packages("e1071")
 install.packages("predictmeans")
 install.packages("gvlma")
 install.packages("popbio")
+install.packages("anytime")
 
+
+
+
+# Libraries needed for regression. (not in use YET, for next steps use)
+library("readr")
+library("IDPmisc")
+library("anytime")
 library("car")
 library("caret")
 library("gvlma")
@@ -44,34 +25,51 @@ library("tidyr")
 library("lmtest")
 library("popbio")
 
+compas_scores_raw <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/compas-scores-raw.csv")
+View(compas_scores_raw)
+
+
+compas_scores2 <- na.omit(compas_scores_raw)
+
+# To remove NA´s fields
+compas_scores3 <- NaRV.omit(compas_scores_raw)
+# No change, after running the line above.
+
+# We remove rows for Persons with "weird" birthdates 
+# after group virtual zoom we decided to remove these four rows:
+compas_scores4 <-compas_scores3[!(compas_scores3$Person_ID=="51157" | compas_scores3$Person_ID=="57823"),]
+compas_scores5 <-compas_scores4[!(compas_scores4$Person_ID=="62384" | compas_scores4$Person_ID=="54272"),]
+
+# examples of removing rows using a list/vector
+# install.packages("Hmisc")
+# library("Hmisc")
+# datawithoutVF = data[which(rownames(data) %nin% remove), ]
+# datawithoutVF = data[!row.names(data)%in%remove,]
+# datawithoutVF = data[ !(row.names(data) %in% remove), ]
+
+
 # We remove columns to keep the ones that we will use as IV
 # We need to make a decision on what columns we will keep & if (and how) we will link this data with rows on other files
-(THIS WILL BE DONE BELOW)
+# (THIS WILL BE DONE BELOW)
 
 ########################################################################################################################
-###################################### PART 2 DATA PROCESS TESTING BACK AND FORTH PROCESS ##############################
+###################################### PART 2 DATA TESTING BACK AND FORTH PROCESS ######################################
 ########################################################################################################################
 
 # Testing Logistic regression on COMPAS PROPUBLICA FILE
-library("caret")
-library("magrittr")
-library("dplyr")
-library("tidyr")
-library("lmtest")
-library("popbio")
+
 
 # read dataset processed by probublica.
 datasets_1498_2680_propublicaCompassRecividism_data_fairml_csv_propublica_data_for_fairml_1_ <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv")
+head(datasets_1498_2680_propublicaCompassRecividism_data_fairml_csv_propublica_data_for_fairml_1_)
 # Just to have a "more maneagable name"
 logit_input <- datasets_1498_2680_propublicaCompassRecividism_data_fairml_csv_propublica_data_for_fairml_1_
 
 # We will check how good predictors are some IV (like race, etc)
-# Now we do a trial with a one-to-one (one IV, one DV)
-
+# Now we do a trial with a one-to-one (one IV, one DV), then with all the factors/IV
+# Here our DV is Two_yr_Recidivism
 ylogit_propub <- glm(Two_yr_Recidivism ~ ., data=logit_input, family="binomial")
-
 summary(ylogit_propub)
-
 probabilities <- predict(ylogit_propub, type = "response")
 
 
@@ -97,10 +95,10 @@ logisticPseudoR2s <- function(LogModel) {
 
 logisticPseudoR2s(ylogit_propub)
 
+# Now we do a backward regression, let´s see where the destiny takes us... ;)
 step(ylogit_propub,direction = 'backward')
 
-# Backward step doesn´t "keep" african. (HOWEVER KEEPS SEX AND AGE ?? hOW DO WE DRAW ADITIONAL CONCLUTIONS ON THIS?)
-# We need to discuss if the remaing factors lead us to any conclusion
+
 # ################
 # ################ RESULT AFTER LAST STEP:
 # ################
@@ -130,8 +128,18 @@ step(ylogit_propub,direction = 'backward')
 # Residual Deviance: 7456 	AIC: 7470
 
 
+# NOTE/COMMENTS: 
+# Backward step doesn´t "keep" african race as DV. (HOWEVER IT KEEPS SEX AND AGE ?? hOW DO WE DRAW ADITIONAL CONCLUTIONS ON THIS?)
+# We need to discuss if the remaing factors lead us to any conclusion
+
+
+
+
+###################################################################################################################################
+# Here we will do tome work on  compas-scores-raw.csv file
+###################################################################################################################################
 # we REMOVE SOME COLUMNS : 
-# wE NEED TO RUN "R-testing-PB.R" to load the needed dataset
+# 
 #
 #
 head(compas_scores5)
@@ -139,19 +147,78 @@ head(compas_scores5)
 dropfromraw <- c("Person_ID", "AssessmentID", "Case_ID", "LastName", "FirstName", "MiddleName", "Screening_Date", "ScaleSet", "Screening_Date", "RecSupervisionLevelText", "DisplayText", "RawScore", "AssessmentReason","IsCompleted", "IsDeleted" )
 compas_scores_redcol = compas_scores5[,!(names(compas_scores5) %in% dropfromraw)]
 head(compas_scores_redcol)
-
-# Warning! This can freeze computer is run on the full dataset
-ylogit_compas_scores_redcol <- lm(DecileScore ~ ., data=compas_scores_redcol)
-
 #
+#
+compas_scores_redcoldate <- compas_scores_redcol
+
+compas_scores_redcoldate$Agency_Text <- as.factor(compas_scores_redcoldate$Agency_Text)
+compas_scores_redcoldate$Sex_Code_Text <- as.factor(compas_scores_redcoldate$Sex_Code_Text)
+compas_scores_redcoldate$Ethnic_Code_Text <- as.factor(compas_scores_redcoldate$Ethnic_Code_Text)
+# We recode DateOfBirth as a date field:
+compas_scores_redcoldate$DateOfBirth <- as.Date(compas_scores_redcoldate$DateOfBirth, format = "%m/%d/%y")
+# We convert to factors using as.factor() function also for all the remaining columns that are not continuous
+compas_scores_redcoldate$Language <- as.factor(compas_scores_redcoldate$Language)
+compas_scores_redcoldate$LegalStatus <- as.factor(compas_scores_redcoldate$LegalStatus)
+compas_scores_redcoldate$CustodyStatus <- as.factor(compas_scores_redcoldate$CustodyStatus)
+compas_scores_redcoldate$MaritalStatus <- as.factor(compas_scores_redcoldate$MaritalStatus)
+compas_scores_redcoldate$ScoreText <- as.factor(compas_scores_redcoldate$ScoreText)
+
+
+# We perform a visual check on our dataframe
+head(compas_scores_redcoldate)
+
+#This function shows how the dummy coding is performed by lm in R - This line is just for testing verification purposes
+# If needed we can use another column if we like to see how such columns are dummy coded by lm() funcion.
+contrasts(compas_scores_redcoldate$LegalStatus)
+
+
+ylogit_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
+# summary also takes it´s time :)
+summary(ylogit_compas_scores_redcoldate)
+contrasts(compas_scores_redcol$Sex_Code_Text)
+
+
+
+compas_scores_redcoldate$Agency_Text <- as.factor(compas_scores_redcoldate$Agency_Text)
+
+compas_scores_redcoldate$DateOfBirth <- as.Date(compas_scores_redcoldate$DateOfBirth, format = "%m/%d/%y")
+# df$JoiningDate <- as.Date(df$JoiningDate , format = "%m/%d/%y")
+
+ 
+compas_scores_redcoldate$Sex_Code_Text <- as.factor(compas_scores_redcoldate$Sex_Code_Text)
+compas_scores_redcoldate$Sex_Code_Text <- as.numeric(compas_scores_redcoldate$Sex_Code_Text)
+
+# ???? our function only seems to work for logit regression... interesting.
+logisticPseudoR2s(ylogit_compas_scores_redcoldate)
+
+
+
+
+# we are HERE ON JUN 17TH !!!!
+
+
+
+
+
+
+
+##########################################################################################################################
+##########################################################################################################################
+
+# Not Needed at the end of the day, after converting date column to date, RStudio stopped having issues with freeze issues.
 # last test below run on June 16th
-# We reduce the number of rows to 10K from 60 to be able to run on the computer, unless some times computer get frozen.
-compas_scores_sampled <- compas_scores_redcol[sample(nrow(compas_scores_redcol), 10000), ]
+# We reduce the number of rows to 10K from 60k to be able to run on the computer, unless some times computer get frozen.
+# compas_scores_sampled <- compas_scores_redcol[sample(nrow(compas_scores_redcol), 10000), ]
+# head(compas_scores_sampled)
+# ylogit_compas_scores_sampled <- lm(DecileScore ~ ., data=compas_scores_sampled)
+# summary(ylogit_compas_scores_sampled)
+# levels(compas_scores_redcoldate$Sex_Code_Text) <- c(1,0)
+# compas_scores_redcoldate$Sex_Code_Text <- as.numeric(compas_scores_redcoldate$Sex_Code_Text)
 
-ylogit_compas_scores_sampled <- lm(DecileScore ~ ., data=compas_scores_sampled)
-
-
-
+# Warning! This can freeze computer is run on the full dataset / FIXED! no issues once you uses as.date() to recode DateOfBirth columns
+ylogit_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
+# summary also takes it´s time :)
+summary(ylogit_compas_scores_redcoldate)
 
 
 
