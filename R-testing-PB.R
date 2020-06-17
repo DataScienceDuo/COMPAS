@@ -1,10 +1,12 @@
+##############################################################################################
+#### OBSOLETE ALL CODE MOVED TO FILE "logit_ref_testing_pb.R" ################################
+##############################################################################################
+
 library(readr)
 library(IDPmisc)
 
-
 compas_scores_raw <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/compas-scores-raw.csv")
 View(compas_scores_raw)
-
 
 compas_scores2 <- na.omit(compas_scores_raw)
 
@@ -23,7 +25,7 @@ compas_scores5 <-compas_scores4[!(compas_scores4$Person_ID=="62384" | compas_sco
 # datawithoutVF = data[!row.names(data)%in%remove,]
 # datawithoutVF = data[ !(row.names(data) %in% remove), ]
 
-# Libraries needed for regression. (not in use YET, for next steps use)
+# Libraries needed for regression. (not in use YET, for kept just in case for next steps use)
 install.packages("caret")
 install.packages("e1071")
 install.packages("predictmeans")
