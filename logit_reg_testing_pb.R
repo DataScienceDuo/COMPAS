@@ -85,7 +85,7 @@ head(compas_scores5)
 dropfromraw <- c("Person_ID", "AssessmentID", "Case_ID", "LastName", "FirstName", "MiddleName", "Screening_Date", "ScaleSet", "Screening_Date", "RecSupervisionLevelText", "DisplayText", "RawScore", "AssessmentReason","IsCompleted", "IsDeleted" )
 compas_scores_redcol = compas_scores5[,!(names(compas_scores5) %in% dropfromraw)]
 head(compas_scores_redcol)
-ylogit_compas_scores_redcol <- glm(DecileScore ~ ., data=compas_scores_redcol)
+ylogit_compas_scores_redcol <- lm(DecileScore ~ ., data=compas_scores_redcol)
 
 
 
