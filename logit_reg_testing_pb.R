@@ -150,39 +150,31 @@ head(compas_scores_redcol)
 #
 #
 compas_scores_redcoldate <- compas_scores_redcol
+# We recode DateOfBirth as a date field:
+compas_scores_redcoldate$DateOfBirth <- as.Date(compas_scores_redcoldate$DateOfBirth, format = "%m/%d/%y")
 
+# We convert to factors using as.factor() function for all the remaining columns that are not continuous
 compas_scores_redcoldate$Agency_Text <- as.factor(compas_scores_redcoldate$Agency_Text)
 compas_scores_redcoldate$Sex_Code_Text <- as.factor(compas_scores_redcoldate$Sex_Code_Text)
 compas_scores_redcoldate$Ethnic_Code_Text <- as.factor(compas_scores_redcoldate$Ethnic_Code_Text)
-# We recode DateOfBirth as a date field:
-compas_scores_redcoldate$DateOfBirth <- as.Date(compas_scores_redcoldate$DateOfBirth, format = "%m/%d/%y")
-# We convert to factors using as.factor() function also for all the remaining columns that are not continuous
 compas_scores_redcoldate$Language <- as.factor(compas_scores_redcoldate$Language)
 compas_scores_redcoldate$LegalStatus <- as.factor(compas_scores_redcoldate$LegalStatus)
 compas_scores_redcoldate$CustodyStatus <- as.factor(compas_scores_redcoldate$CustodyStatus)
 compas_scores_redcoldate$MaritalStatus <- as.factor(compas_scores_redcoldate$MaritalStatus)
 compas_scores_redcoldate$ScoreText <- as.factor(compas_scores_redcoldate$ScoreText)
 
-
-# We perform a visual check on our dataframe
+# We perform a "visual check" on our dataframe
 head(compas_scores_redcoldate)
 
-#This function shows how the dummy coding is performed by lm in R - This line is just for testing verification purposes
-# If needed we can use another column if we like to see how such columns are dummy coded by lm() funcion.
+#This function shows how the dummy coding is performed by lm() in R - This line is just for testing verification purposes
+# If needed we can use another column if we like to see how such columns are dummy coded by lm() funcion. Just change column name after $
 contrasts(compas_scores_redcoldate$LegalStatus)
 
 
 ylogit_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
 # summary also takes it´s time :)
 summary(ylogit_compas_scores_redcoldate)
-contrasts(compas_scores_redcol$Sex_Code_Text)
 
-
-
-compas_scores_redcoldate$Agency_Text <- as.factor(compas_scores_redcoldate$Agency_Text)
-
-compas_scores_redcoldate$DateOfBirth <- as.Date(compas_scores_redcoldate$DateOfBirth, format = "%m/%d/%y")
-# df$JoiningDate <- as.Date(df$JoiningDate , format = "%m/%d/%y")
 
  
 compas_scores_redcoldate$Sex_Code_Text <- as.factor(compas_scores_redcoldate$Sex_Code_Text)
@@ -195,9 +187,7 @@ logisticPseudoR2s(ylogit_compas_scores_redcoldate)
 
 
 # we are HERE ON JUN 17TH !!!!
-
-
-
+# We still ned to figure out how we can "connect" al four source data files in order to improve the quality of our conclutions!!!!
 
 
 
@@ -216,9 +206,9 @@ logisticPseudoR2s(ylogit_compas_scores_redcoldate)
 # compas_scores_redcoldate$Sex_Code_Text <- as.numeric(compas_scores_redcoldate$Sex_Code_Text)
 
 # Warning! This can freeze computer is run on the full dataset / FIXED! no issues once you uses as.date() to recode DateOfBirth columns
-ylogit_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
+# ylogit_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
 # summary also takes it´s time :)
-summary(ylogit_compas_scores_redcoldate)
+# summary(ylogit_compas_scores_redcoldate)
 
 
 
