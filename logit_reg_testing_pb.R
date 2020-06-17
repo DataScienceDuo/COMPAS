@@ -85,7 +85,16 @@ head(compas_scores5)
 dropfromraw <- c("Person_ID", "AssessmentID", "Case_ID", "LastName", "FirstName", "MiddleName", "Screening_Date", "ScaleSet", "Screening_Date", "RecSupervisionLevelText", "DisplayText", "RawScore", "AssessmentReason","IsCompleted", "IsDeleted" )
 compas_scores_redcol = compas_scores5[,!(names(compas_scores5) %in% dropfromraw)]
 head(compas_scores_redcol)
+
+# Warning! This can freeze computer is run on the full dataset
 ylogit_compas_scores_redcol <- lm(DecileScore ~ ., data=compas_scores_redcol)
+
+#
+# last test below run on June 16th
+# We reduce the number of rows to 10K from 60 to be able to run on the computer, unless some times computer get frozen.
+compas_scores_sampled <- compas_scores_redcol[sample(nrow(compas_scores_redcol), 10000), ]
+
+ylogit_compas_scores_sampled <- lm(DecileScore ~ ., data=compas_scores_sampled)
 
 
 
