@@ -25,11 +25,13 @@ library("popbio")
 
 #############################################################################################################################################################
 # We load all needed datafiles (we have 4 datafiles)
-# DATA LOADING FROM FILES
+# DATA LOADING FROM FILES #
 #
 compas_scores_raw <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/compas-scores-raw.csv")
 cox_violent_parsed <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/cox-violent-parsed.csv")
 cox_violent_parsed_filt <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/cox-violent-parsed_filt.csv")
+#
+#
 #############################################################################################################################################################
 
 
@@ -53,6 +55,14 @@ compas_scores5 <-compas_scores4[!(compas_scores4$Person_ID=="62384" | compas_sco
 # datawithoutVF = data[ !(row.names(data) %in% remove), ]
 ######################################################################
 
+# We merge first and last name into a new column named ID_name
+compas_scores5$ID_name <- paste(compas_scores5$FirstName,compas_scores5$LastName)
+write.csv(compas_scores5,"compas_scores_raw_IDname.csv", row.names = TRUE)
+#
+#
+# we change column "name" to "ID_name"
+names(cox_violent_parsed_filt)[names(cox_violent_parsed_filt)=="name"] <- "ID_name"
+write.csv(cox_violent_parsed_filt, "cox_violent_parsed_filt_IDname.csv", row.names = TRUE)
 
 # We remove columns to keep the ones that we will use as IV
 # We need to make a decision on what columns we will keep & if (and how) we will link this data with rows on other files
