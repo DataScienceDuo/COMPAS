@@ -8,8 +8,6 @@ install.packages("popbio")
 install.packages("anytime")
 
 
-
-
 # Libraries needed for regression. (not in use YET, for next steps use)
 library("readr")
 library("IDPmisc")
@@ -25,27 +23,35 @@ library("tidyr")
 library("lmtest")
 library("popbio")
 
+#############################################################################################################################################################
+# We load all needed datafiles (we have 4 datafiles)
+# DATA LOADING FROM FILES
+#
 compas_scores_raw <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/compas-scores-raw.csv")
-View(compas_scores_raw)
+cox_violent_parsed <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/cox-violent-parsed.csv")
+cox_violent_parsed_filt <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/cox-violent-parsed_filt.csv")
+#############################################################################################################################################################
 
-
-compas_scores2 <- na.omit(compas_scores_raw)
 
 # To remove NA´s fields
+compas_scores2 <- na.omit(compas_scores_raw)
 compas_scores3 <- NaRV.omit(compas_scores_raw)
-# No change, after running the line above.
+# No change, after running the line above. :)
 
 # We remove rows for Persons with "weird" birthdates 
 # after group virtual zoom we decided to remove these four rows:
 compas_scores4 <-compas_scores3[!(compas_scores3$Person_ID=="51157" | compas_scores3$Person_ID=="57823"),]
 compas_scores5 <-compas_scores4[!(compas_scores4$Person_ID=="62384" | compas_scores4$Person_ID=="54272"),]
 
+
+######################################################################
 # examples of removing rows using a list/vector
 # install.packages("Hmisc")
 # library("Hmisc")
 # datawithoutVF = data[which(rownames(data) %nin% remove), ]
 # datawithoutVF = data[!row.names(data)%in%remove,]
 # datawithoutVF = data[ !(row.names(data) %in% remove), ]
+######################################################################
 
 
 # We remove columns to keep the ones that we will use as IV
@@ -56,7 +62,7 @@ compas_scores5 <-compas_scores4[!(compas_scores4$Person_ID=="62384" | compas_sco
 ###################################### PART 2 DATA TESTING BACK AND FORTH PROCESS ######################################
 ########################################################################################################################
 
-# Testing Logistic regression on COMPAS PROPUBLICA FILE
+# Testing Logistic regression on COMPAS PROPUBLICA FILE (using binary output recividism as DV Variable)
 
 
 # read dataset processed by probublica.
@@ -153,7 +159,7 @@ compas_scores_redcoldate <- compas_scores_redcol
 # We recode DateOfBirth as a date field:
 compas_scores_redcoldate$DateOfBirth <- as.Date(compas_scores_redcoldate$DateOfBirth, format = "%m/%d/%y")
 
-# We convert to factors using as.factor() function for all the remaining columns that are not continuous
+# We convert to factors using as.factor() function for all the remaining columns that are not continuous IV
 compas_scores_redcoldate$Agency_Text <- as.factor(compas_scores_redcoldate$Agency_Text)
 compas_scores_redcoldate$Sex_Code_Text <- as.factor(compas_scores_redcoldate$Sex_Code_Text)
 compas_scores_redcoldate$Ethnic_Code_Text <- as.factor(compas_scores_redcoldate$Ethnic_Code_Text)
@@ -176,12 +182,9 @@ ylogit_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcol
 summary(ylogit_compas_scores_redcoldate)
 
 
- 
-compas_scores_redcoldate$Sex_Code_Text <- as.factor(compas_scores_redcoldate$Sex_Code_Text)
-compas_scores_redcoldate$Sex_Code_Text <- as.numeric(compas_scores_redcoldate$Sex_Code_Text)
 
-# ???? our function only seems to work for logit regression... interesting.
-logisticPseudoR2s(ylogit_compas_scores_redcoldate)
+
+
 
 
 
@@ -190,11 +193,9 @@ logisticPseudoR2s(ylogit_compas_scores_redcoldate)
 # We still ned to figure out how we can "connect" al four source data files in order to improve the quality of our conclutions!!!!
 
 
-
-
-##########################################################################################################################
-##########################################################################################################################
-
+############################################################################################################################
+############################################################################################################################
+#
 # Not Needed at the end of the day, after converting date column to date, RStudio stopped having issues with freeze issues.
 # last test below run on June 16th
 # We reduce the number of rows to 10K from 60k to be able to run on the computer, unless some times computer get frozen.
@@ -204,11 +205,15 @@ logisticPseudoR2s(ylogit_compas_scores_redcoldate)
 # summary(ylogit_compas_scores_sampled)
 # levels(compas_scores_redcoldate$Sex_Code_Text) <- c(1,0)
 # compas_scores_redcoldate$Sex_Code_Text <- as.numeric(compas_scores_redcoldate$Sex_Code_Text)
-
+#
 # Warning! This can freeze computer is run on the full dataset / FIXED! no issues once you uses as.date() to recode DateOfBirth columns
 # ylogit_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
 # summary also takes it´s time :)
 # summary(ylogit_compas_scores_redcoldate)
-
-
+# ???? our function only seems to work for logit regression... interesting.
+# logisticPseudoR2s(ylogit_compas_scores_redcoldate)
+#
+#
+#############################################################################################################################
+#############################################################################################################################
 
