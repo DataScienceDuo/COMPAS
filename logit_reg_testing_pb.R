@@ -190,7 +190,7 @@ summary(ylogit_propub)
 # 
 # Number of Fisher Scoring iterations: 4
 
-# We should check, about this line and output plot below: (is focussed on a single factor, here we have multiple, should need to think about another plot)
+# We should check, about this line and output plot below: (is focussed on a single factor, here we have multiple IV´s, should need to think about another plot)
 logi.hist.plot(logit_input$Two_yr_Recidivism,logit_input$Number_of_Priors, boxp=FALSE, type="hist", col="gray")
 
 
@@ -218,6 +218,12 @@ logisticPseudoR2s <- function(LogModel) {
 
 
 logisticPseudoR2s(ylogit_propub)
+# Pseudo R^2 for logistic regression
+# Hosmer and Lemeshow R^2   0.124 
+# Cox and Snell R^2         0.157 
+# Nagelkerke R^2            0.21
+
+
 
 # Now we do a BACKWARD REGRESION, let´s see where the destiny takes us... ;)
 step(ylogit_propub,direction = 'backward')
@@ -257,7 +263,6 @@ step(ylogit_propub,direction = 'backward')
 # Backward step doesn´t "keep" african race as DV. (HOWEVER IT KEEPS SEX AND AGE ?? hOW DO WE DRAW ADITIONAL CONCLUTIONS ON THIS?)
 # We need to discuss if the remaing factors lead us to any conclusion
 
-
 ###################################################################################################################################
 # Here we will do tome work on  compas-scores-raw.csv file
 ###################################################################################################################################
@@ -292,6 +297,7 @@ head(compas_scores_redcoldate)
 #This function shows how the dummy coding is performed by lm() in R - This line is just for testing verification purposes
 # If needed we can use another column if we like to see how such columns are dummy coded by lm() funcion. Just change column name after $
 contrasts(compas_scores_redcoldate$LegalStatus)
+
 
 
 ylogit_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
