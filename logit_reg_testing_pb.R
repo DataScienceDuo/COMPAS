@@ -74,10 +74,10 @@ write.csv(cox_violent_parsed_filt, "cox_violent_parsed_filt_IDname.csv", row.nam
 
 
 # read dataset processed by probublica.
-datasets_1498_2680_propublicaCompassRecividism_data_fairml_csv_propublica_data_for_fairml_1_ <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv")
-head(datasets_1498_2680_propublicaCompassRecividism_data_fairml_csv_propublica_data_for_fairml_1_)
+datasets_1498_2680_propublicaCompassRecividism_data_fairml <- read_csv("COMPAS DATA FILES INPUT/datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml.csv")
 # Just to have a "more maneagable name"
-logit_input <- datasets_1498_2680_propublicaCompassRecividism_data_fairml_csv_propublica_data_for_fairml_1_
+logit_input <- datasets_1498_2680_propublicaCompassRecividism_data_fairml
+head(logit_input)
 
 # We will check how good predictors are some IV (like race, etc)
 # Now we do a trial with a one-to-one (one IV, one DV), then with all the factors/IV
@@ -155,7 +155,6 @@ infl <- influence.measures(ylogit_propub)
 summary(infl)
 
 
-
 summary(ylogit_propub)
 #
 # Call:
@@ -190,12 +189,13 @@ summary(ylogit_propub)
 # 
 # Number of Fisher Scoring iterations: 4
 
+
+summary(ylogit_propub)
 # We should check, about this line and output plot below: (is focussed on a single factor, here we have multiple IV´s, should need to think about another plot)
-logi.hist.plot(logit_input$Two_yr_Recidivism,logit_input$Number_of_Priors, boxp=FALSE, type="hist", col="gray")
+logi.hist.plot(logit_input$Number_of_Priors,logit_input$Two_yr_Recidivism, boxp=FALSE, type="hist", col="gray")
 
-
-
-
+# logit_input$Number_of_Priors
+# logit_input$Two_yr_Recidivism
 
 ################################################
 # This section creates a function called       #
@@ -311,8 +311,13 @@ summary(ylogit_compas_scores_redcoldate)
 
 
 
+################################################
+# we are HERE ON JUN 21TH !!!!##################
+################################################
 
-# we are HERE ON JUN 19TH !!!!
+
+
+
 # We still ned to figure out how we can "connect" al four source data files in order to improve the quality of our conclutions!!!!
 
 
@@ -339,4 +344,18 @@ summary(ylogit_compas_scores_redcoldate)
 #
 #############################################################################################################################
 #############################################################################################################################
+
+
+# miscelaneous testing
+
+
+baseball <- read_csv("C:/Users/pablo/Downloads/baseball/baseball.csv")
+baseball$WinsR <- NA
+baseball$WinsR[baseball$"W/L"=='W'] <- 1
+baseball$WinsR[baseball$"W/L"=='L'] <- 0
+head(baseball)
+logi.hist.plot(baseball$"HR Count",baseball$WinsR, boxp=FALSE, type="hist", col="gray")
+
+
+
 
