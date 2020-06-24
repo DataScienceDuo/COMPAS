@@ -1,4 +1,4 @@
-# REV 17JUN20
+# REV 23JUN20
 # PRELIMINARY WRANLING DONE AT THE BEGINNING
 install.packages("caret")
 install.packages("e1071")
@@ -30,54 +30,22 @@ library("popbio")
 compas_scores_raw <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/compas-scores-raw.csv")
 cox_violent_parsed <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/cox-violent-parsed.csv")
 cox_violent_parsed_filt <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/cox-violent-parsed_filt.csv")
+datasets_1498_2680_propublicaCompassRecividism_data_fairml <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml.csv")
+# Just to have a "more maneagable name"
+logit_input <- datasets_1498_2680_propublicaCompassRecividism_data_fairml
 #
 #
 #############################################################################################################################################################
 
 
-# To remove NA´s fields & We remove rows for Persons with "weird" birthdates 
-compas_scores2 <- na.omit(compas_scores_raw)
-compas_scores3 <- NaRV.omit(compas_scores_raw)
-# No change, after running the line above. :)
-# after group virtual zoom we decided to remove these four rows:
-compas_scores4 <-compas_scores3[!(compas_scores3$Person_ID=="51157" | compas_scores3$Person_ID=="57823"),]
-compas_scores5 <-compas_scores4[!(compas_scores4$Person_ID=="62384" | compas_scores4$Person_ID=="54272"),]
-
-
-######################################################################
-# examples of removing rows using a list/vector
-# install.packages("Hmisc")
-# library("Hmisc")
-# datawithoutVF = data[which(rownames(data) %nin% remove), ]
-# datawithoutVF = data[!row.names(data)%in%remove,]
-# datawithoutVF = data[ !(row.names(data) %in% remove), ]
-######################################################################
-
-# We merge first and last name into a new column named ID_name & we write a new csv file on current directory
-compas_scores5$ID_name <- paste(compas_scores5$FirstName,compas_scores5$LastName)
-write.csv(compas_scores5,"compas_scores_raw_IDname.csv", row.names = TRUE)
-# we change column "name" to "ID_name" & we write a new csv file on current directory
-names(cox_violent_parsed_filt)[names(cox_violent_parsed_filt)=="name"] <- "ID_name"
-write.csv(cox_violent_parsed_filt, "cox_violent_parsed_filt_IDname.csv", row.names = TRUE)
-
-
-# We remove columns to keep the ones that we will use as IV
-# We need to make a decision on what columns we will keep & if (and how) we will link this data with rows on other files
-# (THIS WILL BE DONE BELOW)
 
 ########################################################################################################################
-###################################### PART 2 DATA TESTING BACK AND FORTH PROCESS ######################################
+###################################### PART 1 DATA TESTING BACK AND FORTH PROCESS ######################################
 ########################################################################################################################
 
 
 # Testing LOGISTIC REGRESSION on COMPAS PROPUBLICA FILE (using binary output recividism as DV Variable)
 
-
-# read dataset processed by probublica.
-datasets_1498_2680_propublicaCompassRecividism_data_fairml <- read_csv("COMPAS DATA FILES INPUT/datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml.csv")
-# Just to have a "more maneagable name"
-logit_input <- datasets_1498_2680_propublicaCompassRecividism_data_fairml
-head(logit_input)
 
 # We will check how good predictors are some IV (like race, etc)
 # Now we do a trial with a one-to-one (one IV, one DV), then with all the factors/IV
@@ -97,6 +65,7 @@ head(logit_input)
 logit_input3 <- logit_input
 logit_input3$Pred_recR <- as.factor(logit_input$Pred_recR)
 logit_input3$Two_yr_Recidivism <- as.factor(logit_input$Two_yr_Recidivism)
+
 head(logit_input3)
 
 # We calculate the confusion matrix 
@@ -133,11 +102,11 @@ confusion_mat_recidivism
 
 # LOGIT LINEARITY
 # We keep only fields that are numeric
-logit_input1 <- logit_input %>% dplyr::select_if(is.numeric)
-predictors_num <- colnames(logit_input1)
-logit_input1 <- logit_input1 %>% mutate(logit=log(probabilities/(1-probabilities))) %>% gather(key= "predictors_num", value="predictor.value", -logit)
+logit_input_num <- logit_input %>% dplyr::select_if(is.numeric)
+predictors_num <- colnames(logit_input_num)
+logit_input_num <- logit_input_num %>% mutate(logit=log(probabilities/(1-probabilities))) %>% gather(key= "predictors_num", value="predictor.value", -logit)
 # Now we graph
-ggplot(logit_input1, aes(logit, predictor.value))+ geom_point(size=.5, alpha=.5)+ geom_smooth(method= "loess")+ theme_bw()+ facet_wrap(~predictors_num, scales="free_y")
+ggplot(logit_input_num, aes(logit, predictor.value))+ geom_point(size=.5, alpha=.5)+ geom_smooth(method= "loess")+ theme_bw()+ facet_wrap(~predictors_num, scales="free_y")
 # looks linear in most of the range (however above 2.5 becomes non linear)
 
 plot(ylogit_propub$residuals)
@@ -153,7 +122,6 @@ dwtest(ylogit_propub, alternative="two.sided")
 # We check for outliers (now seems ok)
 infl <- influence.measures(ylogit_propub)
 summary(infl)
-
 
 summary(ylogit_propub)
 #
@@ -218,6 +186,8 @@ logisticPseudoR2s <- function(LogModel) {
 
 
 logisticPseudoR2s(ylogit_propub)
+# OUTPUT:
+# 
 # Pseudo R^2 for logistic regression
 # Hosmer and Lemeshow R^2   0.124 
 # Cox and Snell R^2         0.157 
@@ -228,9 +198,7 @@ logisticPseudoR2s(ylogit_propub)
 # Now we do a BACKWARD REGRESION, let´s see where the destiny takes us... ;)
 step(ylogit_propub,direction = 'backward')
 
-
-
-# ###############################################################################################################################
+# ############################################################################################################################
 # ################ RESULT AFTER LAST STEP:
 # ################
 # Step:  AIC=7470.05
@@ -259,29 +227,68 @@ step(ylogit_propub,direction = 'backward')
 # Residual Deviance: 7456 	AIC: 7470
 ###################################################################################################################################
 
-# NOTE/COMMENTS: 
-# Backward step doesn´t "keep" african race as DV. (HOWEVER IT KEEPS SEX AND AGE ?? hOW DO WE DRAW ADITIONAL CONCLUTIONS ON THIS?)
-# We need to discuss if the remaing factors lead us to any conclusion
+
+# NOTE/COM#MENTS:
+# FIRST CONCLUTION\NOTE:
+# Backward step doesn´t "keep" african race as DV so the factor "race" doesn't seem relevant. (HOWEVER "Backward KEEPS SEX AND AGE (??) hOW DO WE DRAW ADITIONAL CONCLUTIONS ON THIS?)
+# We need to discuss if the remaing factors lead us to any conclusion.
+
+
+
+########################################################################################################################
+###################################### PART 2 DATA TESTING COMPAS SCORES RAW FILES #####################################
+########################################################################################################################
 
 ###################################################################################################################################
-# Here we will do tome work on  compas-scores-raw.csv file
+# First, we will do "some work" on  compas-scores-raw.csv file
 ###################################################################################################################################
-# we REMOVE SOME COLUMNS : 
-# 
-#
-#
-head(compas_scores5)
-# Next line we create a vector with all colunms to be removed. (feel free to change if needed)
+
+# To remove NA´s fields & We remove rows for Persons with "weird" birthdates 
+compas_scores2 <- na.omit(compas_scores_raw)
+compas_scores3 <- NaRV.omit(compas_scores2)
+# No change, after running the line above. :)
+# after group virtual zoom we decided to remove these four rows:
+compas_scores4 <-compas_scores3[!(compas_scores3$Person_ID=="51157" | compas_scores3$Person_ID=="57823"),]
+compas_scores5 <-compas_scores4[!(compas_scores4$Person_ID=="62384" | compas_scores4$Person_ID=="54272"),]
+
+
+
+# We merge first and last name into a new column named ID_name & we write a new csv file on current directory
+compas_scores5$DateOfBirth <- as.Date(compas_scores5$DateOfBirth, format = "%m/%d/%y")
+compas_scores5$ID_name <- paste(compas_scores5$FirstName,compas_scores5$LastName, compas_scores5$DateOfBirth)
+# we change column "name" to "ID_name" & we write a new csv file on current directory
+cox_violent_parsed_filt$dob <- as.Date(cox_violent_parsed_filt$dob, format = "%d/%m/%y")
+cox_violent_parsed_filt$ID_name <- paste(cox_violent_parsed_filt$first, cox_violent_parsed_filt$last, cox_violent_parsed_filt$dob)
+
+#names(cox_violent_parsed_filt)[names(cox_violent_parsed_filt)=="name"] <- "ID_name"
+#  We also Merge extra column with birthdate into ID_name
+
+
+# We remove some columns and keep the ones that we will use as IV
+# We need to make a decision on what columns we will keep & if (and how) we will link this data with rows on other files
+
+###################################################################################################################################
+# We will try to do a INNER JOIN between compas_scores5 and cox_violent_parsed_filt with ID_name as "linking variable"
+###################################################################################################################################
+
+# Afterwards we also create two CVS's files saving them in current directory, just in case are needed to be used by other application like Tableau, etc.
+write.csv(compas_scores5,"compas_scores_raw_IDname.csv", row.names = TRUE)
+write.csv(cox_violent_parsed_filt, "cox_violent_parsed_filt_IDname.csv", row.names = TRUE)
+
+
+################################################
+#       THEN WE REMOVE SOME COLUMNS :          #
+################################################
+# Next step, we create a vector "drofromraw"with all colunms selected for removal. (feel free to change if needed)
 dropfromraw <- c("Person_ID", "AssessmentID", "Case_ID", "LastName", "FirstName", "MiddleName", "Screening_Date", "ScaleSet", "Screening_Date", "RecSupervisionLevelText", "DisplayText", "RawScore", "AssessmentReason","IsCompleted", "IsDeleted","ID_name")
 compas_scores_redcol = compas_scores5[,!(names(compas_scores5) %in% dropfromraw)]
 head(compas_scores_redcol)
+summary(compas_scores_redcol)
 #
-#
+# We recode DateOfBirth as a date field, Otherwise problems arise!!!
 compas_scores_redcoldate <- compas_scores_redcol
-# We recode DateOfBirth as a date field:
 compas_scores_redcoldate$DateOfBirth <- as.Date(compas_scores_redcoldate$DateOfBirth, format = "%m/%d/%y")
-
-# We convert to factors using as.factor() function for all the remaining columns that are not continuous IV
+# We convert from "chr" to factors using as.factor() function for all the remaining columns that are not continuous IV
 compas_scores_redcoldate$Agency_Text <- as.factor(compas_scores_redcoldate$Agency_Text)
 compas_scores_redcoldate$Sex_Code_Text <- as.factor(compas_scores_redcoldate$Sex_Code_Text)
 compas_scores_redcoldate$Ethnic_Code_Text <- as.factor(compas_scores_redcoldate$Ethnic_Code_Text)
@@ -293,36 +300,52 @@ compas_scores_redcoldate$ScoreText <- as.factor(compas_scores_redcoldate$ScoreTe
 
 # We perform a "visual check" on our dataframe
 head(compas_scores_redcoldate)
+summary(compas_scores_redcoldate)
 
 #This function shows how the dummy coding is performed by lm() in R - This line is just for testing verification purposes
 # If needed we can use another column if we like to see how such columns are dummy coded by lm() funcion. Just change column name after $
 contrasts(compas_scores_redcoldate$LegalStatus)
 
-
-
-ylogit_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
+Ymodel_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
 # summary also takes it´s time :)
-summary(ylogit_compas_scores_redcoldate)
+summary(Ymodel_compas_scores_redcoldate)
 
-
-
+step(Ymodel_compas_scores_redcoldate, direction = "backward")
 
 
 
 
 
 ################################################
-# we are HERE ON JUN 21TH !!!!##################
+# we are HERE ON JUN 22TH !!!!##################
 ################################################
 
 
 
 
-# We still ned to figure out how we can "connect" al four source data files in order to improve the quality of our conclutions!!!!
 
 
-############################################################################################################################
-############################################################################################################################
+
+
+###################################################################################################################################
+# We will try to do a INNER JOIN between compas_scores5 and cox_violent_parsed_filt with ID_name as "linking variable"
+###################################################################################################################################
+
+
+
+
+
+
+
+
+
+######################################################################################################################################
+######################################################################################################################################
+### BELOW SOME CODE NOT USED IN FINAL VERSION / JUST KEPT AS A REFERENCE OR FUTURE USE 
+######################################################################################################################################
+######################################################################################################################################
+#########################################################################################################################################
+#########################################################################################################################################
 #
 # Not Needed at the end of the day, after converting date column to date, RStudio stopped having issues with freeze issues.
 # last test below run on June 16th
@@ -341,14 +364,16 @@ summary(ylogit_compas_scores_redcoldate)
 # ???? our function only seems to work for logit regression... interesting.
 # logisticPseudoR2s(ylogit_compas_scores_redcoldate)
 #
-#
-#############################################################################################################################
-#############################################################################################################################
+#########################################################################################################################################
+#########################################################################################################################################
 
 
-# miscelaneous testing
 
 
+
+# We still ned to figure out how we can "connect" al four source data files in order to improve the quality of our conclutions!!!!
+
+# miscelaneous testing to check code runs ok...
 baseball <- read_csv("C:/Users/pablo/Downloads/baseball/baseball.csv")
 baseball$WinsR <- NA
 baseball$WinsR[baseball$"W/L"=='W'] <- 1
@@ -357,5 +382,12 @@ head(baseball)
 logi.hist.plot(baseball$"HR Count",baseball$WinsR, boxp=FALSE, type="hist", col="gray")
 
 
-
+######################################################################
+# examples of removing rows using a list/vector
+# install.packages("Hmisc")
+# library("Hmisc")
+# datawithoutVF = data[which(rownames(data) %nin% remove), ]
+# datawithoutVF = data[!row.names(data)%in%remove,]
+# datawithoutVF = data[ !(row.names(data) %in% remove), ]
+######################################################################
 
