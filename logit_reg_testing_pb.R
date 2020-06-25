@@ -1,4 +1,4 @@
-# REV 23JUN20
+# REV 24JUN20
 # PRELIMINARY WRANLING DONE AT THE BEGINNING
 install.packages("caret")
 install.packages("e1071")
@@ -257,11 +257,9 @@ compas_scores5 <-compas_scores4[!(compas_scores4$Person_ID=="62384" | compas_sco
 compas_scores5$DateOfBirth <- as.Date(compas_scores5$DateOfBirth, format = "%m/%d/%y")
 compas_scores5$ID_name <- paste(compas_scores5$FirstName,compas_scores5$LastName, compas_scores5$DateOfBirth)
 # we change column "name" to "ID_name" & we write a new csv file on current directory
+# WARNING! on one file the date formats is mmddyy in the other ddmmyy
 cox_violent_parsed_filt$dob <- as.Date(cox_violent_parsed_filt$dob, format = "%d/%m/%y")
 cox_violent_parsed_filt$ID_name <- paste(cox_violent_parsed_filt$first, cox_violent_parsed_filt$last, cox_violent_parsed_filt$dob)
-
-#names(cox_violent_parsed_filt)[names(cox_violent_parsed_filt)=="name"] <- "ID_name"
-#  We also Merge extra column with birthdate into ID_name
 
 
 # We remove some columns and keep the ones that we will use as IV
@@ -271,9 +269,11 @@ cox_violent_parsed_filt$ID_name <- paste(cox_violent_parsed_filt$first, cox_viol
 # We will try to do a INNER JOIN between compas_scores5 and cox_violent_parsed_filt with ID_name as "linking variable"
 ###################################################################################################################################
 
+##### WRITE FILES TO DISK #####
 # Afterwards we also create two CVS's files saving them in current directory, just in case are needed to be used by other application like Tableau, etc.
 write.csv(compas_scores5,"compas_scores_raw_IDname.csv", row.names = TRUE)
 write.csv(cox_violent_parsed_filt, "cox_violent_parsed_filt_IDname.csv", row.names = TRUE)
+###############################
 
 
 ################################################
@@ -317,19 +317,20 @@ step(Ymodel_compas_scores_redcoldate, direction = "backward")
 
 
 ################################################
-# we are HERE ON JUN 22TH !!!!##################
+# we are HERE ON JUN 24TH !!!!##################
 ################################################
-
-
-
-
-
-
-
-
 ###################################################################################################################################
 # We will try to do a INNER JOIN between compas_scores5 and cox_violent_parsed_filt with ID_name as "linking variable"
 ###################################################################################################################################
+
+
+
+
+
+
+
+
+
 
 
 
@@ -367,12 +368,7 @@ step(Ymodel_compas_scores_redcoldate, direction = "backward")
 #########################################################################################################################################
 #########################################################################################################################################
 
-
-
-
-
 # We still ned to figure out how we can "connect" al four source data files in order to improve the quality of our conclutions!!!!
-
 # miscelaneous testing to check code runs ok...
 baseball <- read_csv("C:/Users/pablo/Downloads/baseball/baseball.csv")
 baseball$WinsR <- NA
@@ -380,8 +376,6 @@ baseball$WinsR[baseball$"W/L"=='W'] <- 1
 baseball$WinsR[baseball$"W/L"=='L'] <- 0
 head(baseball)
 logi.hist.plot(baseball$"HR Count",baseball$WinsR, boxp=FALSE, type="hist", col="gray")
-
-
 ######################################################################
 # examples of removing rows using a list/vector
 # install.packages("Hmisc")
@@ -390,4 +384,7 @@ logi.hist.plot(baseball$"HR Count",baseball$WinsR, boxp=FALSE, type="hist", col=
 # datawithoutVF = data[!row.names(data)%in%remove,]
 # datawithoutVF = data[ !(row.names(data) %in% remove), ]
 ######################################################################
+# names(cox_violent_parsed_filt)[names(cox_violent_parsed_filt)=="name"] <- "ID_name"
+#  We also Merge extra column with birthdate into ID_name
+
 
