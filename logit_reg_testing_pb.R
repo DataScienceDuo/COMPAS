@@ -233,6 +233,46 @@ step(ylogit_propub,direction = 'backward')
 # Backward step doesn´t "keep" african race as DV so the factor "race" doesn't seem relevant. (HOWEVER "Backward KEEPS SEX AND AGE (??) hOW DO WE DRAW ADITIONAL CONCLUTIONS ON THIS?)
 # We need to discuss if the remaing factors lead us to any conclusion.
 
+# Lets test now with a "Number_of_Priors as a DV, note this is not a binary DV so we use lm instead
+head(logit_input)
+modelpropub_priors <- lm(Number_of_Priors ~ ., data=logit_input)
+summary(modelpropub_priors)
+step(modelpropub_priors,direction = 'backward')
+# WE HAVE NOT TESTED ASSUMPTIONS HERE!!! KEEP THIS IN MIND!!!
+modelpropub_priors_reduced <- lm(formula = Number_of_Priors ~ Two_yr_Recidivism + score_factor + 
+                                   Age_Above_FourtyFive + Age_Below_TwentyFive + African_American + 
+                                   Female + Misdemeanor, data = logit_input)
+summary(modelpropub_priors_reduced)
+# Call:
+#   lm(formula = Number_of_Priors ~ Two_yr_Recidivism + score_factor + 
+#        Age_Above_FourtyFive + Age_Below_TwentyFive + African_American + 
+#        Female + Misdemeanor, data = logit_input)
+# 
+# Residuals:
+#   Min     1Q      Median     3Q     Max 
+# -8.949  -2.377   -0.643    1.371   30.137 
+# 
+# Coefficients:
+#                         Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)               1.1959     0.1148  10.416  < 2e-16 ***
+#   Two_yr_Recidivism       1.8246     0.1074  16.985  < 2e-16 ***
+#   score_factor            3.4274     0.1131  30.309  < 2e-16 ***
+#   Age_Above_FourtyFive    1.3196     0.1315  10.038  < 2e-16 ***
+#   Age_Below_TwentyFive   -3.3948     0.1281 -26.494  < 2e-16 ***
+#   African_American        1.1810     0.1053  11.217  < 2e-16 ***
+#   Female                 -0.9309     0.1289  -7.224 5.68e-13 ***
+#   Misdemeanor            -0.7666     0.1071  -7.160 8.99e-13 ***
+#   ---
+#   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+# 
+# Residual standard error: 3.947 on 6164 degrees of freedom
+# Multiple R-squared:  0.3086,	Adjusted R-squared:  0.3079 
+# F-statistic: 393.1 on 7 and 6164 DF,  p-value: < 2.2e-16
+
+# Keeping in mind we still need to test assumptions, Number_of_Priors seems influenced by African_American (dummy coded IV of ethnic/race)
+
+
+
 
 
 ########################################################################################################################
@@ -321,6 +361,7 @@ step(Ymodel_compas_scores_redcoldate, direction = "backward")
 ################################################
 ###################################################################################################################################
 # We will try to do a INNER JOIN between compas_scores5 and cox_violent_parsed_filt with ID_name as "linking variable"
+# This will be done in TABLEAU
 ###################################################################################################################################
 
 
