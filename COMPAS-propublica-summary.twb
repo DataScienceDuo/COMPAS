@@ -196,7 +196,7 @@
       <column caption='Number of Priors' datatype='integer' name='[Number_of_Priors]' role='measure' type='quantitative' />
       <column caption='Two yr Recidivism' datatype='integer' name='[Two_yr_Recidivism]' role='measure' type='quantitative' />
       <column caption='Score Factor' datatype='integer' name='[score_factor]' role='measure' type='quantitative' />
-      <layout dim-ordering='alphabetic' dim-percentage='0.377597' measure-ordering='alphabetic' measure-percentage='0.622403' show-structure='true' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.351588' measure-ordering='alphabetic' measure-percentage='0.648412' show-structure='true' />
       <semantic-values>
         <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
       </semantic-values>
