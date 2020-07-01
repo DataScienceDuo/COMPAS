@@ -12,6 +12,196 @@
     <preference name='ui.shelf.height' value='26' />
   </preferences>
   <datasources>
+    <datasource caption='datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1)' inline='true' name='federated.1ybszz718nexsp1evvo6x0t4qidf' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1)' name='textscan.1u89af21qstgdk1edfhk81fm3oa2'>
+            <connection class='textscan' directory='C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS' filename='datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv' password='' server='' />
+          </named-connection>
+        </named-connections>
+        <relation connection='textscan.1u89af21qstgdk1edfhk81fm3oa2' name='datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv' table='[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1)#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='en_US' separator=','>
+            <column datatype='integer' name='Two_yr_Recidivism' ordinal='0' />
+            <column datatype='integer' name='Number_of_Priors' ordinal='1' />
+            <column datatype='integer' name='score_factor' ordinal='2' />
+            <column datatype='integer' name='Age_Above_FourtyFive' ordinal='3' />
+            <column datatype='integer' name='Age_Below_TwentyFive' ordinal='4' />
+            <column datatype='integer' name='African_American' ordinal='5' />
+            <column datatype='integer' name='Asian' ordinal='6' />
+            <column datatype='integer' name='Hispanic' ordinal='7' />
+            <column datatype='integer' name='Native_American' ordinal='8' />
+            <column datatype='integer' name='Other' ordinal='9' />
+            <column datatype='integer' name='Female' ordinal='10' />
+            <column datatype='integer' name='Misdemeanor' ordinal='11' />
+          </columns>
+        </relation>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
+              <attribute datatype='string' name='collation'>&quot;en_US&quot;</attribute>
+              <attribute datatype='string' name='field-delimiter'>&quot;,&quot;</attribute>
+              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
+              <attribute datatype='string' name='locale'>&quot;en_US&quot;</attribute>
+              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Two_yr_Recidivism</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Two_yr_Recidivism]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>Two_yr_Recidivism</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Number_of_Priors</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Number_of_Priors]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>Number_of_Priors</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>score_factor</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[score_factor]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>score_factor</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Age_Above_FourtyFive</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Age_Above_FourtyFive]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>Age_Above_FourtyFive</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Age_Below_TwentyFive</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Age_Below_TwentyFive]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>Age_Below_TwentyFive</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>African_American</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[African_American]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>African_American</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Asian</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Asian]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>Asian</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Hispanic</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Hispanic]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>Hispanic</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Native_American</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Native_American]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>Native_American</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Other</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Other]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>Other</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Female</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Female]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>Female</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Misdemeanor</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Misdemeanor]</local-name>
+            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
+            <remote-alias>Misdemeanor</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='African American' datatype='integer' name='[African_American]' role='measure' type='quantitative' />
+      <column caption='Age Above FourtyFive' datatype='integer' name='[Age_Above_FourtyFive]' role='measure' type='quantitative' />
+      <column caption='Age Below TwentyFive' datatype='integer' name='[Age_Below_TwentyFive]' role='measure' type='quantitative' />
+      <column caption='Native American' datatype='integer' name='[Native_American]' role='measure' type='quantitative' />
+      <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
+        <calculation class='tableau' formula='1' />
+      </column>
+      <column caption='Number of Priors' datatype='integer' name='[Number_of_Priors]' role='measure' type='quantitative' />
+      <column caption='Two yr Recidivism' datatype='integer' name='[Two_yr_Recidivism]' role='measure' type='quantitative' />
+      <column caption='Score Factor' datatype='integer' name='[score_factor]' role='measure' type='quantitative' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.374302' measure-ordering='alphabetic' measure-percentage='0.625698' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+    </datasource>
     <datasource caption='compas-scores-raw' inline='true' name='federated.1emuhrm0s2qrx51cux6vr1m7e6io' version='18.1'>
       <connection class='federated'>
         <named-connections>
@@ -457,197 +647,7 @@
       <column caption='Score Text' datatype='string' name='[ScoreText]' role='dimension' type='nominal' />
       <column caption='Screening Date' datatype='datetime' name='[Screening_Date]' role='dimension' type='ordinal' />
       <column caption='Sex Code Text' datatype='string' name='[Sex_Code_Text]' role='dimension' type='nominal' />
-      <layout dim-ordering='alphabetic' dim-percentage='0.666667' measure-ordering='alphabetic' measure-percentage='0.333333' show-hidden-fields='true' show-structure='true' />
-      <semantic-values>
-        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
-      </semantic-values>
-    </datasource>
-    <datasource caption='datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1)' inline='true' name='federated.1ybszz718nexsp1evvo6x0t4qidf' version='18.1'>
-      <connection class='federated'>
-        <named-connections>
-          <named-connection caption='datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1)' name='textscan.1u89af21qstgdk1edfhk81fm3oa2'>
-            <connection class='textscan' directory='C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS' filename='datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv' password='' server='' />
-          </named-connection>
-        </named-connections>
-        <relation connection='textscan.1u89af21qstgdk1edfhk81fm3oa2' name='datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv' table='[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1)#csv]' type='table'>
-          <columns character-set='UTF-8' header='yes' locale='en_US' separator=','>
-            <column datatype='integer' name='Two_yr_Recidivism' ordinal='0' />
-            <column datatype='integer' name='Number_of_Priors' ordinal='1' />
-            <column datatype='integer' name='score_factor' ordinal='2' />
-            <column datatype='integer' name='Age_Above_FourtyFive' ordinal='3' />
-            <column datatype='integer' name='Age_Below_TwentyFive' ordinal='4' />
-            <column datatype='integer' name='African_American' ordinal='5' />
-            <column datatype='integer' name='Asian' ordinal='6' />
-            <column datatype='integer' name='Hispanic' ordinal='7' />
-            <column datatype='integer' name='Native_American' ordinal='8' />
-            <column datatype='integer' name='Other' ordinal='9' />
-            <column datatype='integer' name='Female' ordinal='10' />
-            <column datatype='integer' name='Misdemeanor' ordinal='11' />
-          </columns>
-        </relation>
-        <metadata-records>
-          <metadata-record class='capability'>
-            <remote-name />
-            <remote-type>0</remote-type>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias />
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
-              <attribute datatype='string' name='collation'>&quot;en_US&quot;</attribute>
-              <attribute datatype='string' name='field-delimiter'>&quot;,&quot;</attribute>
-              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
-              <attribute datatype='string' name='locale'>&quot;en_US&quot;</attribute>
-              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Two_yr_Recidivism</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[Two_yr_Recidivism]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>Two_yr_Recidivism</remote-alias>
-            <ordinal>0</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Number_of_Priors</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[Number_of_Priors]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>Number_of_Priors</remote-alias>
-            <ordinal>1</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>score_factor</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[score_factor]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>score_factor</remote-alias>
-            <ordinal>2</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Age_Above_FourtyFive</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[Age_Above_FourtyFive]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>Age_Above_FourtyFive</remote-alias>
-            <ordinal>3</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Age_Below_TwentyFive</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[Age_Below_TwentyFive]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>Age_Below_TwentyFive</remote-alias>
-            <ordinal>4</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>African_American</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[African_American]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>African_American</remote-alias>
-            <ordinal>5</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Asian</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[Asian]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>Asian</remote-alias>
-            <ordinal>6</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Hispanic</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[Hispanic]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>Hispanic</remote-alias>
-            <ordinal>7</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Native_American</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[Native_American]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>Native_American</remote-alias>
-            <ordinal>8</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Other</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[Other]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>Other</remote-alias>
-            <ordinal>9</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Female</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[Female]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>Female</remote-alias>
-            <ordinal>10</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Misdemeanor</remote-name>
-            <remote-type>20</remote-type>
-            <local-name>[Misdemeanor]</local-name>
-            <parent-name>[datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml (1).csv]</parent-name>
-            <remote-alias>Misdemeanor</remote-alias>
-            <ordinal>11</ordinal>
-            <local-type>integer</local-type>
-            <aggregation>Sum</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-        </metadata-records>
-      </connection>
-      <aliases enabled='yes' />
-      <column caption='African American' datatype='integer' name='[African_American]' role='measure' type='quantitative' />
-      <column caption='Age Above FourtyFive' datatype='integer' name='[Age_Above_FourtyFive]' role='measure' type='quantitative' />
-      <column caption='Age Below TwentyFive' datatype='integer' name='[Age_Below_TwentyFive]' role='measure' type='quantitative' />
-      <column caption='Native American' datatype='integer' name='[Native_American]' role='measure' type='quantitative' />
-      <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
-        <calculation class='tableau' formula='1' />
-      </column>
-      <column caption='Number of Priors' datatype='integer' name='[Number_of_Priors]' role='measure' type='quantitative' />
-      <column caption='Two yr Recidivism' datatype='integer' name='[Two_yr_Recidivism]' role='measure' type='quantitative' />
-      <column caption='Score Factor' datatype='integer' name='[score_factor]' role='measure' type='quantitative' />
-      <layout dim-ordering='alphabetic' dim-percentage='0.374302' measure-ordering='alphabetic' measure-percentage='0.625698' show-structure='true' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.700673' measure-ordering='alphabetic' measure-percentage='0.299327' show-hidden-fields='true' show-structure='true' />
       <semantic-values>
         <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
       </semantic-values>
@@ -790,8 +790,8 @@
         <devicelayout auto-generated='true' name='Phone'>
           <size maxheight='700' minheight='700' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='25' type='layout-basic' w='100000' x='0' y='0'>
-              <zone h='98000' id='26' param='vert' type='layout-flow' w='98400' x='800' y='1000' />
+            <zone h='100000' id='27' type='layout-basic' w='100000' x='0' y='0'>
+              <zone h='98000' id='28' param='vert' type='layout-flow' w='98400' x='800' y='1000' />
               <zone-style>
                 <format attr='border-color' value='#000000' />
                 <format attr='border-style' value='none' />
@@ -892,7 +892,7 @@
       </viewpoint>
       <simple-id uuid='{BD8D5306-E7F8-4A02-9DD7-E64CDD72808F}' />
     </window>
-    <window class='worksheet' name='Sex as X axis'>
+    <window class='worksheet' maximized='true' name='Sex as X axis'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -923,7 +923,7 @@
       </viewpoint>
       <simple-id uuid='{0277D459-9CFB-45C6-A98A-812341485A2A}' />
     </window>
-    <window class='dashboard' maximized='true' name='Dashboard 1'>
+    <window class='dashboard' name='Dashboard 1'>
       <viewpoints />
       <active id='-1' />
       <simple-id uuid='{50579ABE-5D05-4DDB-9B06-CF720E7B473C}' />
@@ -1096,60 +1096,72 @@
     </thumbnail>
     <thumbnail height='192' name='Sex as X axis' width='190'>
       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
-      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
+      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
+      AAAAAElFTkSuQmCC
     </thumbnail>
     <thumbnail height='192' name='Story 1' width='192'>
       iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAAA7DAAAOwwHHb6hk
