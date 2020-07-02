@@ -357,7 +357,7 @@ step(Ymodel_compas_scores_redcoldate, direction = "backward")
 
 
 ################################################
-# we are HERE ON JUN 24TH !!!!##################
+# we are HERE ON JUN 29TH !!!!##################
 ################################################
 ###################################################################################################################################
 # We will try to do a INNER JOIN between compas_scores5 and cox_violent_parsed_filt with ID_name as "linking variable"
