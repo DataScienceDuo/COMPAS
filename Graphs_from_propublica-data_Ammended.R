@@ -60,31 +60,6 @@ length_full_data_trimmed <- length(unique(df_full$id))
 df_propub_2_yr_csv <- read.csv('https://raw.githubusercontent.com/propublica/compas-analysis/master/compas-scores-two-years.csv', as.is = TRUE)
 
 
-# Recidivism by COMPAS score decile
-hi95 <- function(x) { binom.test(sum(x),length(x),0.5)$conf.int[2] }  
-lo95 <- function(x) { binom.test(sum(x),length(x),0.5)$conf.int[1] } 
-# Recidivism Rate
-se <- function(x) {round(sd(x)/sqrt(length(x)), 3)}
-
-
-# X3 and X4 below and elsewhere are just temporary dataset names or 'tibbles' 
-# which I use for getting data ready for Figures 
-# I also name some tibbles X2 in an Appendix section
-# and I overwrite X2 multiple times as I get data ready for different Figures
-
-X3 <- df_propub_2_yr_csv %>% select(decile_score, two_year_recid)
-tibble_propub <- X3 %>% group_by(decile_score) %>%
-  summarize(m=mean(two_year_recid),lo=lo95(two_year_recid),hi=hi95(two_year_recid)) 
-
-X4 <- corrected_compas_two_year %>% select(decile_score, two_year_recid)
-tibble_correct <- X4 %>% group_by(decile_score) %>%
-  summarize(m=mean(two_year_recid),lo=lo95(two_year_recid),hi=hi95(two_year_recid)) 
-
-
-
-
-
-
 
 
 
@@ -92,6 +67,9 @@ tibble_correct <- X4 %>% group_by(decile_score) %>%
 #############################
 
 # ProPublica two-year general recidivism dataset - 7214 total 
+
+hi95 <- function(x) { binom.test(sum(x),length(x),0.5)$conf.int[2] }  
+lo95 <- function(x) { binom.test(sum(x),length(x),0.5)$conf.int[1] }
 
 X2 <- df_propub_2_yr_csv %>% select(decile_score, two_year_recid, sex)
 
@@ -183,7 +161,7 @@ Chouldechova <- ggplot(tibble_propub, aes(x=decile_score, y=m, fill = race)) +
 # Now replicate Figure
 
 
-# Combining three graphs ( This RUNS OK!!)
+# Combining three graphs
 
 davies_goel_plot_33 <- grid.arrange(gg_davies_goel_sex, gg_davies_goel_race, Chouldechova, ncol = 3,
                                    top = textGrob("Two-Year Recidivism Rate by COMPAS decile score by Sex and Race", 
@@ -195,11 +173,6 @@ davies_goel_plot_33 <- grid.arrange(gg_davies_goel_sex, gg_davies_goel_race, Cho
 ############################
 # END OF GRAPH (3-in-1)
 ############################
-
-
-#########################################################################################################
-#########################################################################################################
-#########################################################################################################
 
 
 
@@ -293,17 +266,14 @@ summary(dmodel)
 ### UNDER CONSTRUCTION ####
 
 
-X33 <- df_propub_2_yr_csv %>% select(age, decile_score)
-X33$decile_score <- as.integer(X33$decile_score)
-X33$age <- as.integer(X33$age)
-X33 <- X33 %>% group_by(age)
-summary(X33)
-
-X33
-tibble_propub33 <- X33 %>% group_by(age) %>% summarize(m=mean(decile_score),lo=lo95(decile_score),hi=hi95(decile_score)) 
+X33 <- df_propub_2_yr_csv %>% select(age, decile_score, race)
+X33 <- X33 %>% filter(race %in% (c("African-American","Caucasian")))
 
 
-ScorebyAge <- ggplot(tibble_propub33, aes(x=age, y=m, fill = race)) +
+tibble_propub <- X33 %>% group_by(age, race) %>% summarize(m=mean(decile_score),lo=lo95(decile_score),hi=hi95(decile_score)) 
+
+
+ScorebyAge <- ggplot(tibble_propub, aes(x=age, y=m, fill = race)) +
   geom_bar(stat='identity', position = position_dodge()) +
   scale_fill_manual(name  ="Race",
                     labels=c("African-American", "Caucasian"),
