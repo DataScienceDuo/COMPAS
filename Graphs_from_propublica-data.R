@@ -163,13 +163,19 @@ Chouldechova <- ggplot(tibble_propub, aes(x=decile_score, y=m, fill = race)) +
 davies_goel_plot_33 <- grid.arrange(gg_davies_goel_sex, gg_davies_goel_race, Chouldechova, ncol = 3,
                                    top = textGrob("Two-Year Recidivism Rate by COMPAS decile score by Sex and Race", 
                                                   gp=gpar(fontsize=12, font=2)))
+
+##################################################################
+
+
 ############################
 # END OF GRAPH (3-in-1)
 ############################
 
 
 
-
+# Predictive Accuracy of COMPAS based on propublica original code.
+# https://github.com/propublica/compas-analysis/blob/master/Compas%20Analysis.ipynb
+#
 df_cox_parsed <- read.csv('https://raw.githubusercontent.com/propublica/compas-analysis/master/cox-parsed.csv', as.is = TRUE)
 
 library(survival)
@@ -192,6 +198,97 @@ nrow(grp)
 
 
 summary(grp$score_factor)
+
+
+summary(grp$race_factor)
+
+f <- Surv(start, end, event, type="counting") ~ score_factor
+model <- coxph(f, data=data)
+summary(model)
+
+# Call:
+#   coxph(formula = f, data = data)
+# 
+# n= 13344, number of events= 3469 
+# 
+#                       coef    exp(coef) se(coef)  z      Pr(>|z|)    
+#   score_factorHigh   1.24969   3.48927  0.04146 30.14   <2e-16 ***
+#   score_factorMedium 0.79627   2.21725  0.04077 19.53   <2e-16 ***
+#   ---
+#   Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+# 
+#                     exp(coef) exp(-coef) lower .95 upper .95
+# score_factorHigh       3.489     0.2866     3.217     3.785
+# score_factorMedium     2.217     0.4510     2.047     2.402
+# 
+# Concordance= 0.636  (se = 0.005 )
+# Likelihood ratio test= 942.8  on 2 df,   p=<2e-16
+# Wald test            = 954.8  on 2 df,   p=<2e-16
+# Score (logrank) test = 1055  on 2 df,   p=<2e-16
+
+decile_f <- Surv(start, end, event, type="counting") ~ decile_score
+dmodel <- coxph(decile_f, data=data)
+summary(dmodel)
+
+# Call:
+#   coxph(formula = decile_f, data = data)
+# 
+# n= 13344, number of events= 3469 
+# 
+#               coef    exp(coef) se(coef)     z    Pr(>|z|)    
+# decile_score 0.194931  1.215228 0.005801 33.61   <2e-16 ***
+#   ---
+#   Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+# 
+#               exp(coef) exp(-coef) lower .95 upper .95
+# decile_score     1.215     0.8229     1.201     1.229
+# 
+# Concordance= 0.664  (se = 0.005 )
+# Likelihood ratio test= 1112  on 1 df,   p=<2e-16
+# Wald test            = 1129  on 1 df,   p=<2e-16
+# Score (logrank) test = 1208  on 1 df,   p=<2e-16
+
+
+
+
+
+
+
+
+
+
+###########################################################################################
+############################################################################################
+### NEW GRAPH FOR AGE ###
+### UNDER CONSTRUCTION ####
+
+
+X33 <- df_propub_2_yr_csv %>% select(age, decile_score, race)
+X33 <- X33 %>% filter(race %in% (c("African-American","Caucasian")))
+
+
+tibble_propub <- X33 %>% group_by(age, race) %>% summarize(m=mean(decile_score),lo=lo95(decile_score),hi=hi95(decile_score)) 
+
+
+ScorebyAge <- ggplot(tibble_propub, aes(x=age, y=m, fill = race)) +
+  geom_bar(stat='identity', position = position_dodge()) +
+  scale_fill_manual(name  ="Race",
+                    labels=c("African-American", "Caucasian"),
+                    values=c("African-American"="coral3", "Caucasian"="lightskyblue3")) +
+  xlab(' ') + ylab(' ') +
+  theme(legend.position = "top") +
+  theme(legend.title=element_blank()) +
+  theme(legend.position = c(0.4, 0.85)) +
+  theme(legend.background=element_blank()) + 
+  ylim(0,1) + 
+  scale_x_continuous(breaks=seq(1,10,1))  +
+  geom_errorbar(aes(ymin=lo, ymax=hi), width=.2,
+                position=position_dodge(.9)) +
+  geom_hline(yintercept = mean(X2$two_year_recid), linetype = "dashed") +
+  annotate("text", x=3, y=mean(X2$two_year_recid)+.15, 
+           label=paste("Mean =", round(mean(X2$two_year_recid),2)), colour="black", angle=0) 
+
+ScorebyAge
 
 
 

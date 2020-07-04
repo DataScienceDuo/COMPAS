@@ -1,4 +1,4 @@
-# REV 24JUN20
+# REV 29JUN20
 # PRELIMINARY WRANLING DONE AT THE BEGINNING
 install.packages("caret")
 install.packages("e1071")
@@ -159,7 +159,7 @@ summary(ylogit_propub)
 
 
 summary(ylogit_propub)
-# We should check, about this line and output plot below: (is focussed on a single factor, here we have multiple IV´s, should need to think about another plot)
+# We should check, about this line and output plot below: (is focussed on a single factor, here we have multiple IV?s, should need to think about another plot)
 logi.hist.plot(logit_input$Number_of_Priors,logit_input$Two_yr_Recidivism, boxp=FALSE, type="hist", col="gray")
 
 # logit_input$Number_of_Priors
@@ -195,7 +195,7 @@ logisticPseudoR2s(ylogit_propub)
 
 
 
-# Now we do a BACKWARD REGRESION, let´s see where the destiny takes us... ;)
+# Now we do a BACKWARD REGRESION, let?s see where the destiny takes us... ;)
 step(ylogit_propub,direction = 'backward')
 
 # ############################################################################################################################
@@ -230,7 +230,7 @@ step(ylogit_propub,direction = 'backward')
 
 # NOTE/COM#MENTS:
 # FIRST CONCLUTION\NOTE:
-# Backward step doesn´t "keep" african race as DV so the factor "race" doesn't seem relevant. (HOWEVER "Backward KEEPS SEX AND AGE (??) hOW DO WE DRAW ADITIONAL CONCLUTIONS ON THIS?)
+# Backward step doesn?t "keep" african race as DV so the factor "race" doesn't seem relevant. (HOWEVER "Backward KEEPS SEX AND AGE (??) hOW DO WE DRAW ADITIONAL CONCLUTIONS ON THIS?)
 # We need to discuss if the remaing factors lead us to any conclusion.
 
 # Lets test now with a "Number_of_Priors as a DV, note this is not a binary DV so we use lm instead
@@ -283,7 +283,7 @@ summary(modelpropub_priors_reduced)
 # First, we will do "some work" on  compas-scores-raw.csv file
 ###################################################################################################################################
 
-# To remove NA´s fields & We remove rows for Persons with "weird" birthdates 
+# To remove NA?s fields & We remove rows for Persons with "weird" birthdates 
 compas_scores2 <- na.omit(compas_scores_raw)
 compas_scores3 <- NaRV.omit(compas_scores2)
 # No change, after running the line above. :)
@@ -347,7 +347,7 @@ summary(compas_scores_redcoldate)
 contrasts(compas_scores_redcoldate$LegalStatus)
 
 Ymodel_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
-# summary also takes it´s time :)
+# summary also takes it?s time :)
 summary(Ymodel_compas_scores_redcoldate)
 
 step(Ymodel_compas_scores_redcoldate, direction = "backward")
@@ -406,7 +406,7 @@ step(Ymodel_compas_scores_redcoldate, direction = "backward")
 #
 # Warning! This can freeze computer is run on the full dataset / FIXED! no issues once you uses as.date() to recode DateOfBirth columns
 # ylogit_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
-# summary also takes it´s time :)
+# summary also takes it?s time :)
 # summary(ylogit_compas_scores_redcoldate)
 # ???? our function only seems to work for logit regression... interesting.
 # logisticPseudoR2s(ylogit_compas_scores_redcoldate)
@@ -432,5 +432,7 @@ logi.hist.plot(baseball$"HR Count",baseball$WinsR, boxp=FALSE, type="hist", col=
 ######################################################################
 # names(cox_violent_parsed_filt)[names(cox_violent_parsed_filt)=="name"] <- "ID_name"
 #  We also Merge extra column with birthdate into ID_name
+##############################################################################################################
+##############################################################################################################
 
 
