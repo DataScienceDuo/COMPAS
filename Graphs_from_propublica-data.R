@@ -89,7 +89,9 @@ tibble_correct <- X4 %>% group_by(decile_score) %>%
 
 
 
-#############################
+#########################################################
+# FIRST GRAPH RECIDIVISM BY SEX VS DECILE SCORE TWO LINES
+#########################################################
 
 # ProPublica two-year general recidivism dataset - 7214 total 
 
@@ -151,6 +153,9 @@ gg_davies_goel_race <- ggplot(tibble_propub, aes(x=decile_score, y=m, color = ra
 
 #############################
 #############################
+
+
+
 
 # ProPublica two-year general recidivism dataset (7214 total all race groups)
 
@@ -293,14 +298,12 @@ summary(dmodel)
 ### UNDER CONSTRUCTION ####
 
 
-X33 <- df_propub_2_yr_csv %>% select(age, decile_score)
-X33$decile_score <- as.integer(X33$decile_score)
-X33$age <- as.integer(X33$age)
-X33 <- X33 %>% group_by(age)
+X33 <- df_propub_2_yr_csv %>% select(age, decile_score, race)
+# X33$decile_score <- as.integer(X33$decile_score)
+# X33$age <- as.integer(X33$age)
+# X33 <- X33 %>% group_by(age)
 summary(X33)
 
-X33
-tibble_propub33 <- X33 %>% group_by(age) %>% summarize(m=mean(decile_score),lo=lo95(decile_score),hi=hi95(decile_score)) 
 
 
 ScorebyAge <- ggplot(tibble_propub33, aes(x=age, y=m, fill = race)) +
@@ -324,5 +327,21 @@ ScorebyAge <- ggplot(tibble_propub33, aes(x=age, y=m, fill = race)) +
 ScorebyAge
 
 
+test45 <- chisq.test(X33$decile_score,X33$age)
+
+qnorm(0.05)
 
 
+# hi95t <- function(x) { t.test(x, y = NULL, uservar = "unequal", conf.level = 0.05)$conf.int[2] }  
+# lo95t <- function(x) { t.test(x, y = NULL, uservar = "unequal", conf.level = 0.05)$conf.int[1] }
+
+
+tibble_propub33 <- X33 %>% group_by(age) %>% summarize(m=mean(decile_score))
+
+
+ggplot(tibble_propub33, aes(x=age,y=m)) +
+  geom_line() + geom_hline(yintercept = mean(tibble_propub33$m), linetype = "dashed") +
+  xlab('AGE') + ylab('DECILE COMPAS SCORE')
+       
+       
+       

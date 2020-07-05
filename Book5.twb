@@ -11,15 +11,15 @@
     <preference name='ui.shelf.height' value='26' />
   </preferences>
   <datasources>
-    <datasource caption='compas-scores-two-years (compas-scores-two-years)' inline='true' name='federated.1iv652117xfeau1ehl0bf1vo6w17' version='18.1'>
+    <datasource caption='compas-scores-two-years' inline='true' name='federated.1bmz6xl006re0w151kvxp0p8x7ii' version='18.1'>
       <connection class='federated'>
         <named-connections>
-          <named-connection caption='compas-scores-two-years' name='excel-direct.1u844lh1pxlpvd1g63uxb0ndd77d'>
-            <connection class='excel-direct' cleaning='no' compat='no' dataRefreshTime='' filename='C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/compas-scores-two-years.xlsx' interpretationMode='0' password='' server='' validate='no' />
+          <named-connection caption='compas-scores-two-years' name='textscan.0luiyu90lb8bz115zo2kd08bvd8d'>
+            <connection class='textscan' directory='C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/compas-analysis-dup-pb' filename='compas-scores-two-years.csv' password='' server='' />
           </named-connection>
         </named-connections>
-        <relation connection='excel-direct.1u844lh1pxlpvd1g63uxb0ndd77d' name='compas-scores-two-years' table='[&apos;compas-scores-two-years$&apos;]' type='table'>
-          <columns gridOrigin='A1:BA7215:no:A1:BA7215:0' header='yes' outcome='2'>
+        <relation connection='textscan.0luiyu90lb8bz115zo2kd08bvd8d' name='compas-scores-two-years.csv' table='[compas-scores-two-years#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='en_US' separator=','>
             <column datatype='integer' name='id' ordinal='0' />
             <column datatype='string' name='name' ordinal='1' />
             <column datatype='string' name='first' ordinal='2' />
@@ -76,781 +76,665 @@
           </columns>
         </relation>
         <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
+              <attribute datatype='string' name='collation'>&quot;en_US&quot;</attribute>
+              <attribute datatype='string' name='field-delimiter'>&quot;,&quot;</attribute>
+              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
+              <attribute datatype='string' name='locale'>&quot;en_US&quot;</attribute>
+              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
+            </attributes>
+          </metadata-record>
           <metadata-record class='column'>
             <remote-name>id</remote-name>
             <remote-type>20</remote-type>
             <local-name>[id]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>id</remote-alias>
             <ordinal>0</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>name</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[name]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>name</remote-alias>
             <ordinal>1</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>first</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[first]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>first</remote-alias>
             <ordinal>2</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>last</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[last]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>last</remote-alias>
             <ordinal>3</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>compas_screening_date</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[compas_screening_date]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>compas_screening_date</remote-alias>
             <ordinal>4</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>sex</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[sex]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>sex</remote-alias>
             <ordinal>5</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>dob</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[dob]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>dob</remote-alias>
             <ordinal>6</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>age</remote-name>
             <remote-type>20</remote-type>
             <local-name>[age]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>age</remote-alias>
             <ordinal>7</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>age_cat</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[age_cat]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>age_cat</remote-alias>
             <ordinal>8</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>race</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[race]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>race</remote-alias>
             <ordinal>9</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>juv_fel_count</remote-name>
             <remote-type>20</remote-type>
             <local-name>[juv_fel_count]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>juv_fel_count</remote-alias>
             <ordinal>10</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>decile_score</remote-name>
             <remote-type>20</remote-type>
             <local-name>[decile_score]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>decile_score</remote-alias>
             <ordinal>11</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>juv_misd_count</remote-name>
             <remote-type>20</remote-type>
             <local-name>[juv_misd_count]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>juv_misd_count</remote-alias>
             <ordinal>12</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>juv_other_count</remote-name>
             <remote-type>20</remote-type>
             <local-name>[juv_other_count]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>juv_other_count</remote-alias>
             <ordinal>13</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>priors_count</remote-name>
             <remote-type>20</remote-type>
             <local-name>[priors_count]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>priors_count</remote-alias>
             <ordinal>14</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>days_b_screening_arrest</remote-name>
             <remote-type>20</remote-type>
             <local-name>[days_b_screening_arrest]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>days_b_screening_arrest</remote-alias>
             <ordinal>15</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>c_jail_in</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>135</remote-type>
             <local-name>[c_jail_in]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>c_jail_in</remote-alias>
             <ordinal>16</ordinal>
             <local-type>datetime</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>c_jail_out</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>135</remote-type>
             <local-name>[c_jail_out]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>c_jail_out</remote-alias>
             <ordinal>17</ordinal>
             <local-type>datetime</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>c_case_number</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[c_case_number]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>c_case_number</remote-alias>
             <ordinal>18</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>c_offense_date</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[c_offense_date]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>c_offense_date</remote-alias>
             <ordinal>19</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>c_arrest_date</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[c_arrest_date]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>c_arrest_date</remote-alias>
             <ordinal>20</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>c_days_from_compas</remote-name>
             <remote-type>20</remote-type>
             <local-name>[c_days_from_compas]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>c_days_from_compas</remote-alias>
             <ordinal>21</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>c_charge_degree</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[c_charge_degree]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>c_charge_degree</remote-alias>
             <ordinal>22</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>c_charge_desc</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[c_charge_desc]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>c_charge_desc</remote-alias>
             <ordinal>23</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>is_recid</remote-name>
             <remote-type>20</remote-type>
             <local-name>[is_recid]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>is_recid</remote-alias>
             <ordinal>24</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>r_case_number</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[r_case_number]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>r_case_number</remote-alias>
             <ordinal>25</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>r_charge_degree</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[r_charge_degree]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>r_charge_degree</remote-alias>
             <ordinal>26</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>r_days_from_arrest</remote-name>
             <remote-type>20</remote-type>
             <local-name>[r_days_from_arrest]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>r_days_from_arrest</remote-alias>
             <ordinal>27</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>r_offense_date</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[r_offense_date]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>r_offense_date</remote-alias>
             <ordinal>28</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>r_charge_desc</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[r_charge_desc]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>r_charge_desc</remote-alias>
             <ordinal>29</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>r_jail_in</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[r_jail_in]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>r_jail_in</remote-alias>
             <ordinal>30</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>r_jail_out</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[r_jail_out]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>r_jail_out</remote-alias>
             <ordinal>31</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>violent_recid</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[violent_recid]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>violent_recid</remote-alias>
             <ordinal>32</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <approx-count>1</approx-count>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>is_violent_recid</remote-name>
             <remote-type>20</remote-type>
             <local-name>[is_violent_recid]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>is_violent_recid</remote-alias>
             <ordinal>33</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>vr_case_number</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[vr_case_number]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>vr_case_number</remote-alias>
             <ordinal>34</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>vr_charge_degree</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[vr_charge_degree]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>vr_charge_degree</remote-alias>
             <ordinal>35</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>vr_offense_date</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[vr_offense_date]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>vr_offense_date</remote-alias>
             <ordinal>36</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>vr_charge_desc</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[vr_charge_desc]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>vr_charge_desc</remote-alias>
             <ordinal>37</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>type_of_assessment</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[type_of_assessment]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>type_of_assessment</remote-alias>
             <ordinal>38</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>decile_score 1</remote-name>
             <remote-type>20</remote-type>
             <local-name>[decile_score 1]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>decile_score 1</remote-alias>
             <ordinal>39</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>score_text</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[score_text]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>score_text</remote-alias>
             <ordinal>40</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>screening_date</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[screening_date]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>screening_date</remote-alias>
             <ordinal>41</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>v_type_of_assessment</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[v_type_of_assessment]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>v_type_of_assessment</remote-alias>
             <ordinal>42</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>v_decile_score</remote-name>
             <remote-type>20</remote-type>
             <local-name>[v_decile_score]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>v_decile_score</remote-alias>
             <ordinal>43</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>v_score_text</remote-name>
-            <remote-type>130</remote-type>
+            <remote-type>129</remote-type>
             <local-name>[v_score_text]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>v_score_text</remote-alias>
             <ordinal>44</ordinal>
             <local-type>string</local-type>
             <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
             <contains-null>true</contains-null>
-            <collation flag='1' name='LEN_RUS_S2' />
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
-            </attributes>
+            <collation flag='0' name='LEN_RUS' />
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>v_screening_date</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[v_screening_date]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>v_screening_date</remote-alias>
             <ordinal>45</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>in_custody</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[in_custody]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>in_custody</remote-alias>
             <ordinal>46</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>out_custody</remote-name>
-            <remote-type>7</remote-type>
+            <remote-type>133</remote-type>
             <local-name>[out_custody]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>out_custody</remote-alias>
             <ordinal>47</ordinal>
             <local-type>date</local-type>
             <aggregation>Year</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>priors_count 1</remote-name>
             <remote-type>20</remote-type>
             <local-name>[priors_count 1]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>priors_count 1</remote-alias>
             <ordinal>48</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>start</remote-name>
             <remote-type>20</remote-type>
             <local-name>[start]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>start</remote-alias>
             <ordinal>49</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>end</remote-name>
             <remote-type>20</remote-type>
             <local-name>[end]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>end</remote-alias>
             <ordinal>50</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>event</remote-name>
             <remote-type>20</remote-type>
             <local-name>[event]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>event</remote-alias>
             <ordinal>51</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
           </metadata-record>
           <metadata-record class='column'>
             <remote-name>two_year_recid</remote-name>
             <remote-type>20</remote-type>
             <local-name>[two_year_recid]</local-name>
-            <parent-name>[compas-scores-two-years]</parent-name>
+            <parent-name>[compas-scores-two-years.csv]</parent-name>
             <remote-alias>two_year_recid</remote-alias>
             <ordinal>52</ordinal>
             <local-type>integer</local-type>
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
-            </attributes>
-          </metadata-record>
-          <metadata-record class='capability'>
-            <remote-name />
-            <remote-type>0</remote-type>
-            <parent-name>[compas-scores-two-years]</parent-name>
-            <remote-alias />
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-            <attributes>
-              <attribute datatype='integer' name='context'>0</attribute>
-              <attribute datatype='string' name='gridOrigin'>&quot;A1:BA7215:no:A1:BA7215:0&quot;</attribute>
-              <attribute datatype='boolean' name='header'>true</attribute>
-              <attribute datatype='integer' name='outcome'>2</attribute>
-            </attributes>
           </metadata-record>
         </metadata-records>
       </connection>
@@ -922,19 +806,13 @@
       <table>
         <view>
           <datasources>
-            <datasource caption='compas-scores-two-years (compas-scores-two-years)' name='federated.1iv652117xfeau1ehl0bf1vo6w17' />
+            <datasource caption='compas-scores-two-years' name='federated.1bmz6xl006re0w151kvxp0p8x7ii' />
           </datasources>
-          <datasource-dependencies datasource='federated.1iv652117xfeau1ehl0bf1vo6w17'>
+          <datasource-dependencies datasource='federated.1bmz6xl006re0w151kvxp0p8x7ii'>
             <column caption='Age' datatype='integer' name='[age]' role='measure' type='quantitative' />
-            <column-instance column='[decile_score 1]' derivation='Avg' name='[avg:decile_score 1:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[decile_score]' derivation='Avg' name='[avg:decile_score:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[priors_count]' derivation='Avg' name='[avg:priors_count:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[r_days_from_arrest]' derivation='Avg' name='[avg:r_days_from_arrest:qk]' pivot='key' type='quantitative' />
-            <column caption='Decile Score 1' datatype='integer' name='[decile_score 1]' role='measure' type='quantitative' />
-            <column caption='Decile Score' datatype='integer' name='[decile_score]' role='measure' type='quantitative' />
+            <column-instance column='[two_year_recid]' derivation='Count' name='[cnt:two_year_recid:qk]' pivot='key' type='quantitative' />
             <column-instance column='[age]' derivation='None' name='[none:age:qk]' pivot='key' type='quantitative' />
-            <column caption='Priors Count' datatype='integer' name='[priors_count]' role='measure' type='quantitative' />
-            <column caption='R Days From Arrest' datatype='integer' name='[r_days_from_arrest]' role='measure' type='quantitative' />
+            <column caption='Two Year Recid' datatype='integer' name='[two_year_recid]' role='measure' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -945,64 +823,13 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
-          </pane>
-          <pane id='1' selection-relaxation-option='selection-relaxation-allow' y-axis-name='[federated.1iv652117xfeau1ehl0bf1vo6w17].[avg:decile_score:qk]'>
-            <view>
-              <breakdown value='auto' />
-            </view>
-            <mark class='Automatic' />
-          </pane>
-          <pane id='2' selection-relaxation-option='selection-relaxation-allow' y-axis-name='[federated.1iv652117xfeau1ehl0bf1vo6w17].[avg:decile_score 1:qk]'>
-            <view>
-              <breakdown value='auto' />
-            </view>
-            <mark class='Automatic' />
-          </pane>
-          <pane id='3' selection-relaxation-option='selection-relaxation-allow' y-axis-name='[federated.1iv652117xfeau1ehl0bf1vo6w17].[avg:priors_count:qk]'>
-            <view>
-              <breakdown value='auto' />
-            </view>
-            <mark class='Automatic' />
-          </pane>
-          <pane id='4' selection-relaxation-option='selection-relaxation-allow' y-axis-name='[federated.1iv652117xfeau1ehl0bf1vo6w17].[avg:r_days_from_arrest:qk]'>
-            <view>
-              <breakdown value='auto' />
-            </view>
-            <mark class='Automatic' />
+            <trendline degree='5' enable-confidence-bands='true' enable-instant-analytics='true' enabled='true' exclude-color='false' exclude-intercept='false' fit='polynomial' />
           </pane>
         </panes>
-        <rows>([federated.1iv652117xfeau1ehl0bf1vo6w17].[avg:decile_score:qk] + ([federated.1iv652117xfeau1ehl0bf1vo6w17].[avg:decile_score 1:qk] + ([federated.1iv652117xfeau1ehl0bf1vo6w17].[avg:priors_count:qk] + [federated.1iv652117xfeau1ehl0bf1vo6w17].[avg:r_days_from_arrest:qk])))</rows>
-        <cols>[federated.1iv652117xfeau1ehl0bf1vo6w17].[none:age:qk]</cols>
+        <rows>[federated.1bmz6xl006re0w151kvxp0p8x7ii].[cnt:two_year_recid:qk]</rows>
+        <cols>[federated.1bmz6xl006re0w151kvxp0p8x7ii].[none:age:qk]</cols>
       </table>
-      <simple-id uuid='{6D5505CB-F632-46EC-8B11-6BA34ACA7690}' />
-    </worksheet>
-    <worksheet name='Sheet 2'>
-      <table>
-        <view>
-          <datasources>
-            <datasource caption='compas-scores-two-years (compas-scores-two-years)' name='federated.1iv652117xfeau1ehl0bf1vo6w17' />
-          </datasources>
-          <datasource-dependencies datasource='federated.1iv652117xfeau1ehl0bf1vo6w17'>
-            <column-instance column='[decile_score]' derivation='Attribute' name='[attr:decile_score:qk]' pivot='key' type='quantitative' />
-            <column caption='Decile Score' datatype='integer' name='[decile_score]' role='measure' type='quantitative' />
-            <column-instance column='[v_decile_score]' derivation='None' name='[none:v_decile_score:qk]' pivot='key' type='quantitative' />
-            <column caption='V Decile Score' datatype='integer' name='[v_decile_score]' role='measure' type='quantitative' />
-          </datasource-dependencies>
-          <aggregation value='true' />
-        </view>
-        <style />
-        <panes>
-          <pane selection-relaxation-option='selection-relaxation-allow'>
-            <view>
-              <breakdown value='auto' />
-            </view>
-            <mark class='Automatic' />
-          </pane>
-        </panes>
-        <rows>[federated.1iv652117xfeau1ehl0bf1vo6w17].[none:v_decile_score:qk]</rows>
-        <cols>[federated.1iv652117xfeau1ehl0bf1vo6w17].[attr:decile_score:qk]</cols>
-      </table>
-      <simple-id uuid='{6A4B5371-CEDD-43B0-BFCB-AFB02F55967E}' />
+      <simple-id uuid='{EADA4D0F-F9A3-4BF2-88F6-65C7AC448699}' />
     </worksheet>
   </worksheets>
   <windows source-height='30'>
@@ -1030,119 +857,250 @@
       <viewpoint>
         <highlight>
           <color-one-way>
-            <field>[federated.1iv652117xfeau1ehl0bf1vo6w17].[none:age_cat:nk]</field>
+            <field>[federated.1bmz6xl006re0w151kvxp0p8x7ii].[none:age_cat:nk]</field>
           </color-one-way>
         </highlight>
       </viewpoint>
-      <simple-id uuid='{547F9834-4539-4451-8D82-4312599384A2}' />
-    </window>
-    <window class='worksheet' name='Sheet 2'>
-      <cards>
-        <edge name='left'>
-          <strip size='160'>
-            <card type='pages' />
-            <card type='filters' />
-            <card type='marks' />
-          </strip>
-        </edge>
-        <edge name='top'>
-          <strip size='2147483647'>
-            <card type='columns' />
-          </strip>
-          <strip size='2147483647'>
-            <card type='rows' />
-          </strip>
-          <strip size='31'>
-            <card type='title' />
-          </strip>
-        </edge>
-      </cards>
-      <simple-id uuid='{1834F0F8-7949-4895-AF1F-655849267683}' />
+      <simple-id uuid='{B7B35A62-6FAE-4B07-964F-FA3CD9D567BE}' />
     </window>
   </windows>
   <thumbnails>
     <thumbnail height='192' name='Sheet 1' width='192'>
       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
-      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
-    </thumbnail>
-    <thumbnail height='192' name='Sheet 2' width='192'>
-      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
+      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
     </thumbnail>
   </thumbnails>
 </workbook>
