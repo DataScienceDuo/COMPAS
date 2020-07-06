@@ -1,4 +1,4 @@
-# REV 29JUN20
+# REV 05JUL20
 # PRELIMINARY WRANLING DONE AT THE BEGINNING
 install.packages("caret")
 install.packages("e1071")
@@ -31,11 +31,62 @@ compas_scores_raw <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final
 cox_violent_parsed <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/cox-violent-parsed.csv")
 cox_violent_parsed_filt <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/cox-violent-parsed_filt.csv")
 datasets_1498_2680_propublicaCompassRecividism_data_fairml <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/COMPAS/COMPAS DATA FILES INPUT/datasets_1498_2680_propublicaCompassRecividism_data_fairml.csv_propublica_data_for_fairml.csv")
-# Just to have a "more maneagable name"
+# Just to have a "more manageable name"
 logit_input <- datasets_1498_2680_propublicaCompassRecividism_data_fairml
+# FairML "simple" subset, easy to model on (all numeric variables in columns)
+#
+#
+# Reading in ProPublica's github two-year general recidivism dataset
+df_propub_2_yr_csv <- read.csv('https://raw.githubusercontent.com/propublica/compas-analysis/master/compas-scores-two-years.csv', as.is = TRUE)
+df_full_entire <- read.csv('https://raw.githubusercontent.com/propublica/compas-analysis/master/compas-scores.csv', as.is = TRUE)
 #
 #
 #############################################################################################################################################################
+
+
+#############################################################################################################################################################
+################################## MISC PRE PROCESSING ######################################################################################################
+#############################################################################################################################################################
+compas_scores_two_years <- read_csv("C:/Users/pablo/OneDrive/Escritorio/Proyecto Final WozU Git/compas-analysis-dup-pb/compas-scores-two-years.csv")
+
+df33 <- dplyr::select(compas_scores_two_years, age, c_charge_degree, race, age_cat, score_text, sex, priors_count, 
+                    days_b_screening_arrest, decile_score, is_recid, two_year_recid, c_jail_in, c_jail_out) %>% 
+  filter(days_b_screening_arrest <= 30) %>%
+  filter(days_b_screening_arrest >= -30) %>%
+  filter(is_recid != -1) %>%
+  filter(c_charge_degree != "O") %>%
+  filter(score_text != 'N/A')
+nrow(df33)
+
+df33$length_of_stay <- as.numeric(as.Date(df33$c_jail_out) - as.Date(df33$c_jail_in))
+cor(df33$length_of_stay, df33$decile_score)
+
+summary(df33$age_cat)
+
+summary(df33$race)
+
+summary(df33$score_text)
+
+xtabs(~ sex + race, data=df33)
+
+
+df33 <- mutate(df33, crime_factor = factor(c_charge_degree)) %>%
+  mutate(age_factor = as.factor(age_cat)) %>%
+  within(age_factor <- relevel(age_factor, ref = 1)) %>%
+  mutate(race_factor = factor(race)) %>%
+  within(race_factor <- relevel(race_factor, ref = 3)) %>%
+  mutate(gender_factor = factor(sex, labels= c("Female","Male"))) %>%
+  within(gender_factor <- relevel(gender_factor, ref = 2)) %>%
+  mutate(score_factor = factor(score_text != "Low", labels = c("LowScore","HighScore")))
+#
+# score_text is mutated from three levels to two levels in a new column named score_factor
+# so we can go with a logit regression.
+
+model33 <- glm(score_factor ~ gender_factor + age_factor + race_factor +
+               priors_count + crime_factor + two_year_recid, family="binomial", data=df33)
+summary(model33)
+
+
 
 
 
@@ -52,8 +103,19 @@ logit_input <- datasets_1498_2680_propublicaCompassRecividism_data_fairml
 # Here our DV is Two_yr_Recidivism
 ylogit_propub <- glm(Two_yr_Recidivism ~ ., data=logit_input, family="binomial")
 
-probabilities <- predict(ylogit_propub, type = "response")
+# Here our DV is score_factor
+ylogit_propub3 <- glm(score_factor ~ ., data=logit_input, family="binomial")
+summary(ylogit_propub3)
+step(ylogit_propub3, direction = 'backward')
 
+##
+ylogit_propub_2yr <- glm(two_year_recid ~ race + age_cat + priors_count.1 + is_recid + decile_score, data=df_propub_2_yr_csv, family="binomial")
+summary(ylogit_propub_2yr)
+step(ylogit_propub_2yr, direction = 'backward')
+##
+
+
+probabilities <- predict(ylogit_propub, type = "response")
 
 logit_input$Pred_rec <- ifelse(probabilities > .5,"pos","neg")
 logit_input$Pred_recR <- NA
@@ -100,6 +162,7 @@ confusion_mat_recidivism
 #        'Positive' Class : 0   
 #
 
+#
 # LOGIT LINEARITY
 # We keep only fields that are numeric
 logit_input_num <- logit_input %>% dplyr::select_if(is.numeric)
@@ -195,7 +258,7 @@ logisticPseudoR2s(ylogit_propub)
 
 
 
-# Now we do a BACKWARD REGRESION, let?s see where the destiny takes us... ;)
+# Now we do a BACKWARD REGRESION, lets see where the destiny takes us... ;)
 step(ylogit_propub,direction = 'backward')
 
 # ############################################################################################################################
@@ -307,19 +370,24 @@ cox_violent_parsed_filt$ID_name <- paste(cox_violent_parsed_filt$first, cox_viol
 
 ###################################################################################################################################
 # We will try to do a INNER JOIN between compas_scores5 and cox_violent_parsed_filt with ID_name as "linking variable"
+# This has been done under Tableau
 ###################################################################################################################################
 
 ##### WRITE FILES TO DISK #####
 # Afterwards we also create two CVS's files saving them in current directory, just in case are needed to be used by other application like Tableau, etc.
 write.csv(compas_scores5,"compas_scores_raw_IDname.csv", row.names = TRUE)
 write.csv(cox_violent_parsed_filt, "cox_violent_parsed_filt_IDname.csv", row.names = TRUE)
+# We look for them in our current working directory:
+wd33 <- getwd()
+str33 <- paste("Current working directory is", wd, sep = "  ")
+str33
 ###############################
 
 
 ################################################
 #       THEN WE REMOVE SOME COLUMNS :          #
 ################################################
-# Next step, we create a vector "drofromraw"with all colunms selected for removal. (feel free to change if needed)
+# Next step, we create a vector "drofromraw" with all colunms selected for removal. (feel free to change if needed)
 dropfromraw <- c("Person_ID", "AssessmentID", "Case_ID", "LastName", "FirstName", "MiddleName", "Screening_Date", "ScaleSet", "Screening_Date", "RecSupervisionLevelText", "DisplayText", "RawScore", "AssessmentReason","IsCompleted", "IsDeleted","ID_name")
 compas_scores_redcol = compas_scores5[,!(names(compas_scores5) %in% dropfromraw)]
 head(compas_scores_redcol)
@@ -343,7 +411,8 @@ head(compas_scores_redcoldate)
 summary(compas_scores_redcoldate)
 
 #This function shows how the dummy coding is performed by lm() in R - This line is just for testing verification purposes
-# If needed we can use another column if we like to see how such columns are dummy coded by lm() funcion. Just change column name after $
+# If needed we can use another column if we like to see how such columns are dummy coded by lm() function. 
+# Just change column name after $
 contrasts(compas_scores_redcoldate$LegalStatus)
 
 Ymodel_compas_scores_redcoldate <- lm(DecileScore ~ ., data=compas_scores_redcoldate)
@@ -354,30 +423,13 @@ step(Ymodel_compas_scores_redcoldate, direction = "backward")
 
 
 
-
-
-
-
-
-
-
 ################################################
 # we are HERE ON JUN 29TH !!!!##################
 ################################################
 ###################################################################################################################################
 # We will try to do a INNER JOIN between compas_scores5 and cox_violent_parsed_filt with ID_name as "linking variable"
-# This will be done in TABLEAU
+# This will be done in TABLEAU used in graphs for the final presentation
 ###################################################################################################################################
-
-
-
-
-
-
-
-
-
-
 
 
 

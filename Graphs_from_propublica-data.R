@@ -1,9 +1,14 @@
 # Based on R code by:
 # title: "ProPublica's COMPAS Data Revisited"
 # author: "Matias Barenstein"
+#
 # Updated on 04JUL2020
-
-
+# Woz-U final presentation 
+wd33 <- getwd()
+str33 <- paste("Current working directory is", wd, sep = "  ")
+str33
+# Print Working Directory as a reference
+install.packages("varhandle")
 
 # Loading R libraries
 # If you are running this yourself, you have to make sure you have these R packages already installed
@@ -22,10 +27,11 @@ library(caret)
 library(survival)
 library(pROC)
 
-# Reading in ProPublica's full dataset
+# Reading in ProPublica's full dataset directlyt from web repository!!! :)
 df_full_entire <- read.csv('https://raw.githubusercontent.com/propublica/compas-analysis/master/compas-scores.csv', as.is = TRUE)
 length_full_data <- length(unique(df_full_entire$id))
 # This dataset contains the full sample of PRETRIAL defendants collected by ProPublica
+
 
 # Additionally, of the remaining 11001 people
 # ProPublica dropped 670 people who did not appear to have good data
@@ -33,7 +39,6 @@ length_full_data <- length(unique(df_full_entire$id))
 # ProPublica tagged these with "is_recid" = -1 in their full dataset
 # I also drop these 670 people from the full dataset
 # to make it more comparable to ProPublica's two-year data
-
 df_full <- df_full_entire[which(df_full_entire$id<11002),]
 df_full <- df_full[which(df_full$is_recid!=-1),]
 
@@ -294,40 +299,66 @@ summary(dmodel)
 
 ###########################################################################################
 ############################################################################################
-### NEW GRAPH FOR AGE ###
+### NEW GRAPH FOR SCORE BY AGE ###
 ### UNDER CONSTRUCTION ####
+library(varhandle)
 
-
-X33 <- df_propub_2_yr_csv %>% select(age, decile_score, race)
+# We keep some columns
+X32 <- df_propub_2_yr_csv %>% select(age, decile_score, race)
 # X33$decile_score <- as.integer(X33$decile_score)
 # X33$age <- as.integer(X33$age)
 # X33 <- X33 %>% group_by(age)
-summary(X33)
+summary(X32)
+
+# The chi-square test of independence is used to analyze the frequency table (i.e. contingency table) formed by two categorical variables. 
+# The chi-square test evaluates whether there is a significant association between the categories of the two variables. 
+X33 <- X32
+X33$age <- as.factor(X33$age)
+X33$decile_score <- as.factor(X33$decile_score)
+testchi_scorevsage <- chisq.test(X33$decile_score,X33$age)
+testchi_scorevsage
+
+# Warning Message: Chi-squared approximation may be incorrect
+# Pearson's Chi-squared test
+# 
+# data:  X33$decile_score and X33$age
+# X-squared = 2409.5, df = 576, p-value < 2.2e-16
+
+testchi_scorevsrace <- chisq.test(X33$decile_score,X33$race)
+testchi_scorevsrace
+# Warning Message: Chi-squared approximation may be incorrect
+# Pearson's Chi-squared test
+# 
+# data:  X33$decile_score and X33$race
+# X-squared = 811.69, df = 45, p-value < 2.2e-16
+
+
+# t.test
+
+X34 <- X32
+library(varhandle)
+library(dplyr)
+
+ttest_scorevsage <- t.test(X34$decile_score,X34$age)
+ttest_scorevsage
+
+X34 <- X33 %>% mutate(race=recode(race, 
+                         `African-American` = "1",
+                         `Caucasian`= "2",
+                         `Hispanic`= "3",
+                         `Asian`= "4",
+                         `Native American`= "5",
+                         `Other`= "6"))
+X34$race <- as.integer(X34$race)
+X34$decile_score <- as.integer(X34$decile_score)
+
+ttest_scorevsrace <- t.test(X34$decile_score,X34$race)
+ttest_scorevsrace
 
 
 
-ScorebyAge <- ggplot(tibble_propub33, aes(x=age, y=m, fill = race)) +
-  geom_bar(stat='identity', position = position_dodge()) +
-  scale_fill_manual(name  ="Race",
-                    labels=c("African-American", "Caucasian"),
-                    values=c("African-American"="coral3", "Caucasian"="lightskyblue3")) +
-  xlab(' ') + ylab(' ') +
-  theme(legend.position = "top") +
-  theme(legend.title=element_blank()) +
-  theme(legend.position = c(0.4, 0.85)) +
-  theme(legend.background=element_blank()) + 
-  ylim(0,1) + 
-  scale_x_continuous(breaks=seq(1,10,1))  +
-  geom_errorbar(aes(ymin=lo, ymax=hi), width=.2,
-                position=position_dodge(.9)) +
-  geom_hline(yintercept = mean(X2$two_year_recid), linetype = "dashed") +
-  annotate("text", x=3, y=mean(X2$two_year_recid)+.15, 
-           label=paste("Mean =", round(mean(X2$two_year_recid),2)), colour="black", angle=0) 
-
-ScorebyAge
 
 
-test45 <- chisq.test(X33$decile_score,X33$age)
 
 qnorm(0.05)
 
@@ -342,6 +373,8 @@ tibble_propub33 <- X33 %>% group_by(age) %>% summarize(m=mean(decile_score))
 ggplot(tibble_propub33, aes(x=age,y=m)) +
   geom_line() + geom_hline(yintercept = mean(tibble_propub33$m), linetype = "dashed") +
   xlab('AGE') + ylab('DECILE COMPAS SCORE')
+# However we will get this graph from Tableau.
        
        
-       
+wd <- getwd()
+wd    
