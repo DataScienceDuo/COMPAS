@@ -79,13 +79,132 @@ df33 <- mutate(df33, crime_factor = factor(c_charge_degree)) %>%
   within(gender_factor <- relevel(gender_factor, ref = 2)) %>%
   mutate(score_factor = factor(score_text != "Low", labels = c("LowScore","HighScore")))
 #
-# score_text is mutated from three levels to two levels in a new column named score_factor
-# so we can go with a logit regression.
+# score_text is mutated from three levels to two levels (BINOMIAL) in a new column named score_factor
+# so we can go ahead with a logit regression.
 
 model33 <- glm(score_factor ~ gender_factor + age_factor + race_factor +
                priors_count + crime_factor + two_year_recid, family="binomial", data=df33)
 summary(model33)
+# Call:
+#   glm(formula = score_factor ~ gender_factor + age_factor + race_factor + 
+#         priors_count + crime_factor + two_year_recid, family = "binomial", 
+#       data = df33)
+# 
+# Deviance Residuals: 
+#   Min       1Q   Median       3Q      Max  
+# -2.9966  -0.7919  -0.3303   0.8121   2.6024  
+# 
+# Coefficients:
+#                               Estimate Std. Error z value Pr(>|z|)    
+#   (Intercept)                 -1.52554    0.07851 -19.430  < 2e-16 ***
+#   gender_factorFemale          0.22127    0.07951   2.783 0.005388 ** 
+#   age_factorGreater than 45   -1.35563    0.09908 -13.682  < 2e-16 ***
+#   age_factorLess than 25       1.30839    0.07593  17.232  < 2e-16 ***
+#   race_factorAfrican-American  0.47721    0.06935   6.881 5.93e-12 ***
+#   race_factorAsian            -0.25441    0.47821  -0.532 0.594717    
+#   race_factorHispanic         -0.42839    0.12813  -3.344 0.000827 ***
+#   race_factorNative American   1.39421    0.76612   1.820 0.068784 .  
+#   race_factorOther            -0.82635    0.16208  -5.098 3.43e-07 ***
+#   priors_count                 0.26895    0.01110  24.221  < 2e-16 ***
+#   crime_factorM               -0.31124    0.06655  -4.677 2.91e-06 ***
+#   two_year_recid               0.68586    0.06402  10.713  < 2e-16 ***
+#   ---
+#   Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+# 
+# (Dispersion parameter for binomial family taken to be 1)
+# 
+#   Null deviance: 8483.3  on 6171  degrees of freedom
+# Residual deviance: 6168.4  on 6160  degrees of freedom
+# AIC: 6192.4
+# 
+# Number of Fisher Scoring iterations: 5
 
+
+
+
+control <- exp(-1.52554) / (1 + exp(-1.52554))
+exp(0.47721) / (1 - control + (control * exp(0.47721)))
+# [1] 1.452841
+# Black defendants are 45% more likely than white defendants to receive a higher score correcting for the seriousness of their crime, 
+# previous arrests, and future criminal behavior.
+
+
+exp(0.22127) / (1 - control + (control * exp(0.22127)))
+# Women are 19.4% more likely than men to get a higher score.
+
+
+exp(1.30839) / (1 - control + (control * exp(1.30839)))
+# Most surprisingly, people under 25 are 2.5 times as likely to get a higher score as middle aged defendants.
+
+
+# We run some chi square test
+
+chisq.test(df33$score_factor, df33$race)
+#  >  chisq.test(df33$score_factor, df33$race)
+#  
+#  Pearson's Chi-squared test
+# 
+# data:  df33$score_factor and df33$race
+# X-squared = 479.75, df = 5, p-value < 2.2e-16
+
+chisq.test(df33$score_factor,df33$age_cat)
+#   > chisq.test(df33$score_factor,df33$age_cat)
+# 
+# Pearson's Chi-squared test
+# 
+# data:  df33$score_factor and df33$age_cat
+# X-squared = 478.43, df = 2, p-value < 2.2e-16
+
+# test recividism vs score
+chisq.test(df33$two_year_recid, df33$score_factor)
+# 
+# Pearson's Chi-squared test with Yates' continuity correction
+# 
+# data:  df33$two_year_recid and df33$score_factor
+# X-squared = 610.49, df = 1, p-value < 2.2e-16
+
+
+
+# Two year recidivism vs other factors
+model34 <- glm(two_year_recid ~ gender_factor + age_factor + race_factor +
+                 priors_count + crime_factor + score_factor, family="binomial", data=df33)
+summary(model34)
+
+# Call:
+# glm(formula = two_year_recid ~ gender_factor + age_factor + race_factor + 
+#         priors_count + crime_factor + score_factor, family = "binomial", 
+#       data = df33)
+# 
+# Deviance Residuals: 
+#   Min       1Q   Median       3Q      Max  
+# -2.5875  -0.9257  -0.6413   1.0355   2.0572  
+# 
+# Coefficients:
+#                                 Estimate Std. Error z value Pr(>|z|)    
+#   (Intercept)                 -0.793407   0.067365 -11.778  < 2e-16 ***
+#   gender_factorFemale         -0.379289   0.072906  -5.202 1.97e-07 ***
+#   age_factorGreater than 45   -0.516489   0.077557  -6.660 2.75e-11 ***
+#   age_factorLess than 25       0.540449   0.071805   7.527 5.21e-14 ***
+#   race_factorAfrican-American  0.026285   0.063804   0.412  0.68037    
+#   race_factorAsian            -0.519606   0.432354  -1.202  0.22944    
+#   race_factorHispanic         -0.120019   0.110257  -1.089  0.27635    
+#   race_factorNative American  -0.456590   0.655601  -0.696  0.48615    
+#   race_factorOther            -0.058954   0.129012  -0.457  0.64769    
+#   priors_count                 0.131516   0.008431  15.599  < 2e-16 ***
+#   crime_factorM               -0.178525   0.059570  -2.997  0.00273 ** 
+#   score_factorHighScore        0.706420   0.063352  11.151  < 2e-16 ***
+#   ---
+#   Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+# 
+# (Dispersion parameter for binomial family taken to be 1)
+# 
+# Null deviance: 8506.4  on 6171  degrees of freedom
+# Residual deviance: 7451.9  on 6160  degrees of freedom
+# AIC: 7475.9
+# 
+# Number of Fisher Scoring iterations: 4
+
+chisq.test(df33$two_year_recid, df33$race_factor)
 
 
 
@@ -95,7 +214,7 @@ summary(model33)
 ########################################################################################################################
 
 
-# Testing LOGISTIC REGRESSION on COMPAS PROPUBLICA FILE (using binary output recividism as DV Variable)
+# Testing LOGISTIC REGRESSION on COMPAS PROPUBLICA FILE (using binary output recidivism as DV Variable)
 
 
 # We will check how good predictors are some IV (like race, etc)
@@ -130,7 +249,7 @@ logit_input3$Two_yr_Recidivism <- as.factor(logit_input$Two_yr_Recidivism)
 
 head(logit_input3)
 
-# We calculate the confusion matrix 
+# We calculate the confusion matrix // Recividism vs predicted recividism
 confusion_mat_recidivism <- caret::confusionMatrix(logit_input3$Two_yr_Recidivism, logit_input3$Pred_recR)
 confusion_mat_recidivism
 
@@ -161,6 +280,11 @@ confusion_mat_recidivism
 #                                           
 #        'Positive' Class : 0   
 #
+
+
+
+
+
 
 #
 # LOGIT LINEARITY
@@ -224,6 +348,9 @@ summary(ylogit_propub)
 summary(ylogit_propub)
 # We should check, about this line and output plot below: (is focussed on a single factor, here we have multiple IV?s, should need to think about another plot)
 logi.hist.plot(logit_input$Number_of_Priors,logit_input$Two_yr_Recidivism, boxp=FALSE, type="hist", col="gray")
+
+chisq.test(logit_input$Two_yr_Recidivism, logit_input$African_American)
+
 
 # logit_input$Number_of_Priors
 # logit_input$Two_yr_Recidivism
